@@ -10,51 +10,50 @@ namespace TestsUnitaires
         private readonly StudentOffice office;
         private readonly Client ofAge = Clients.Jane();
         private readonly Client underAge = Clients.Underage();
+        private readonly Product water;
+        private readonly Product chips;
+        private readonly Product beer;
 
         public CommercialTests()
         {
             commercial = new Commercial();
             office = new StudentOffice();
+            commercial.AddProduct("water", EnumTypeProduct.Beverage, Products.WaterPrice(), 0);
+            commercial.AddProduct("chips", EnumTypeProduct.Food, Products.ChipsPrice(), 0);
+            commercial.AddProduct("beer", EnumTypeProduct.AlcoholicBeverage, Products.BeerPrice(), 5.1f);
+            water = commercial.Order("water");
+            chips = commercial.Order("chips");
+            beer = commercial.Order("beer");
         }
-
         [Fact]
         public void CanOrderBeverage()
         {            
-            commercial.AddProduct("water", EnumTypeProduct.Beverage, Products.WaterPrice(), 0);
-
-            Assert.IsType<Beverage>(commercial.Order("water"));
-            Assert.IsNotType<AlcoholicBeverage>(commercial.Order("water"));
+            Assert.IsType<Beverage>(water);
+            Assert.IsNotType<AlcoholicBeverage>(water);
         }
         [Fact]
         public void CanOrderFood()
         {
-            commercial.AddProduct("chips", EnumTypeProduct.Food, Products.ChipsPrice(), 0);
-
-            Assert.IsType<Food>(commercial.Order("chips"));
-            Assert.IsNotType<AlcoholicBeverage>(commercial.Order("chips"));
+            Assert.IsType<Food>(chips);
+            Assert.IsNotType<AlcoholicBeverage>(chips);
         }
         [Fact]
         public void CanOrderAlcoholicBeverage()
         {
-            commercial.AddProduct("beer", EnumTypeProduct.AlcoholicBeverage, Products.BeerPrice(), 5.1f);
-
-            Assert.IsType<AlcoholicBeverage>(commercial.Order("beer"));
-            Assert.IsNotType<Food>(commercial.Order("beer"));
+            Assert.IsType<AlcoholicBeverage>(beer);
+            Assert.IsNotType<Food>(beer);
         }
 
         [Fact]
         public void CanBuyAlcoholOrNot()
         {
-            commercial.AddProduct("beer", EnumTypeProduct.AlcoholicBeverage, Products.BeerPrice(), 5.1f);
-
-            Assert.True(ofAge.CanBuy(commercial.Order("beer")));
-            Assert.False(underAge.CanBuy(commercial.Order("beer")));
+            Assert.True(ofAge.CanBuy(beer));
+            Assert.False(underAge.CanBuy(beer));
         }
 
         [Fact]
         public void OrderingIntoStockTest()
         {
-            commercial.AddProduct("chips", EnumTypeProduct.Food, Products.ChipsPrice(), 0);
             Stock stock = office._currentStock;
 
             commercial.AddToStock(office, "chips", 5);
