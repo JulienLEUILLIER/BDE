@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP7", "TP7\TP7.csproj", "{D720A5C9-577B-4A12-B6B9-719DD9FAFBD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TP8", "TP8\TP8.csproj", "{D720A5C9-577B-4A12-B6B9-719DD9FAFBD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsUnitaires", "TestsUnitaires\TestsUnitaires.csproj", "{F76ABF1E-66C6-4719-8473-ED0553270FA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsUnitaires", "TestsUnitaires\TestsUnitaires.csproj", "{F76ABF1E-66C6-4719-8473-ED0553270FA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

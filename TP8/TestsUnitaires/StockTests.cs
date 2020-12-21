@@ -1,6 +1,6 @@
 ﻿using TestsUnitaires.DataGenerator;
 using Xunit;
-using TP7;
+using TP8;
 
 namespace TestsUnitaires
 {

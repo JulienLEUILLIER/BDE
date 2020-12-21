@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TP7
+namespace TP8
 {
     class Program
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TP7;
+using TP8;
 
 namespace TestsUnitaires.DataGenerator
 {

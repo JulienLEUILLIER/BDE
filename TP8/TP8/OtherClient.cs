@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TP7
+namespace TP8
 {
     public class OtherClient : Client
     {
