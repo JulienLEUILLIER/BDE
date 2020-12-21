@@ -15,17 +15,16 @@ namespace TP8
 
             return productInformation._typeProduct switch
             {
-                EnumTypeProduct.Beverage => new Beverage(productname, productInformation._priceInformation),
-                EnumTypeProduct.Food => new Food(productname, productInformation._priceInformation),
-                EnumTypeProduct.AlcoholicBeverage => new AlcoholicBeverage(productname, productInformation._priceInformation, productInformation._alcoholDegree),
+                EnumTypeProduct.Beverage => new Beverage(productInformation),
+                EnumTypeProduct.Food => new Food(productInformation),
+                EnumTypeProduct.AlcoholicBeverage => new AlcoholicBeverage(productInformation),
                 _ => throw new NotImplementedException(),
             };
         }
 
-        public void AddProduct(string productName, EnumTypeProduct typeProduct, PriceInformation priceInformation, float alcoholdegree)
+        public void AddProduct(ProductInformation productinfo)
         {
-            ProductInformation productInformation = new ProductInformation(productName, typeProduct, priceInformation, alcoholdegree);
-            Brochure.Add(productInformation);
+            Brochure.Add(productinfo);
         }
 
         public void AddToStock(StudentOffice office, string productName, int quantity)
@@ -33,6 +32,12 @@ namespace TP8
             Stock stock = office._currentStock;
             Product orderedProduct = Order(productName);
             stock.AddProduct(orderedProduct, quantity);
+        }
+
+        public Product GetProduct(ProductInformation info)
+        {
+            this.AddProduct(info);
+            return this.Order(info._productName);
         }
     }
 }

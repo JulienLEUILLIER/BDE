@@ -6,18 +6,19 @@ namespace TestsUnitaires
 {
     public class SellingTests
     {
-        private readonly StudentOffice sut;
+        private readonly StudentOffice sut = new StudentOffice();
         private readonly Client john = Clients.John();
         private readonly Client jane = Clients.Jane();
-        private readonly Product chips = Products.Chips();
+        private readonly ProductGenerator generator = new ProductGenerator();
+        private readonly Product chips;
 
         
         public SellingTests()
         {
-            sut = new StudentOffice();
+            chips = generator.Chips();
             sut.AddClient(john, 20m);
             sut.AddClient(jane, 30m);
-            sut._currentStock.AddProduct(chips, 50);
+            generator.factory.AddToStock(sut, "chips", 50);
             sut.SellProduct(john, chips, 5);
             sut.SellProduct(jane, chips, 3);
         }
@@ -28,8 +29,8 @@ namespace TestsUnitaires
             decimal priceStudent = john.GetAppropriatePrice(chips);
             decimal priceOther = jane.GetAppropriatePrice(chips);
 
-            Assert.Equal(1.0m, priceStudent);
-            Assert.Equal(1.25m, priceOther);
+            Assert.Equal(1.5m, priceStudent);
+            Assert.Equal(2.0m, priceOther);
         }
         [Fact]
         public void StockChangeTest()
@@ -39,14 +40,14 @@ namespace TestsUnitaires
         [Fact]
         public void ClientBalanceChangeTest()
         {
-            Assert.Equal(15, sut._ClientList[john]);
-            Assert.Equal(26.25m, sut._ClientList[jane]);
+            Assert.Equal(12.5m, sut._ClientList[john]);
+            Assert.Equal(24m, sut._ClientList[jane]);
         }
 
         [Fact]
         public void StudentOfficeBalanceChangeTest()
         {
-            Assert.Equal(83.75m, sut._currentStock.CurrentBalance);
+            Assert.Equal(63.5m, sut._currentStock.CurrentBalance);
         }
     }
 }

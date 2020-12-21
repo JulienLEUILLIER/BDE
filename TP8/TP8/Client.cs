@@ -38,9 +38,8 @@ namespace TP8
         public decimal GetAppropriatePrice(Product product)
         {
             decimal appropriatePrice;
-            PriceInformation priceInformation = product._priceInformation;
             appropriatePrice = this is Student ?
-                priceInformation._memberPrice : priceInformation._notMemberPrice;
+                product._memberPrice : product._notMemberPrice;
             return appropriatePrice;
         }
 

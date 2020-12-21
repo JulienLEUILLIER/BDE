@@ -7,10 +7,9 @@ namespace TP8
     public class AlcoholicBeverage : Beverage
     {
         public readonly float _alcoholDegree;
-
-        public AlcoholicBeverage(string productName, PriceInformation priceInformation, float alcoholDegree) : base(productName, priceInformation)
+        public AlcoholicBeverage(ProductInformation info) : base(info)
         {
-            _alcoholDegree = alcoholDegree;
+            _alcoholDegree = info._alcoholDegree;
         }
     }
 }

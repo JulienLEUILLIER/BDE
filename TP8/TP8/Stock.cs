@@ -26,16 +26,16 @@ namespace TP8
         public void AddProduct(Product product, int quantity)
         {
             Product currentProduct = GetProductByName(product._productName);
-            PriceInformation priceInformation = product._priceInformation;
+            
             if (currentProduct == null)
             {
                 _StockProduct.Add(product, quantity);
             }
-            else if (_currentBalance >= quantity * priceInformation._buyPrice && quantity > 0)
+            else if (_currentBalance >= quantity * product._buyPrice && quantity > 0)
             {
                 CheckStockChange(currentProduct, quantity);
             }
-            SetBalance(-quantity * priceInformation._buyPrice);
+            SetBalance(-quantity * product._buyPrice);
         }
 
         public void CheckStockChange(Product product, int quantity)

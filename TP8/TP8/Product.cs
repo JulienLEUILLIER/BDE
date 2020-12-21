@@ -7,12 +7,16 @@ namespace TP8
     public abstract class Product : IPackaging
     {
         public readonly string _productName;
-        public readonly PriceInformation _priceInformation;
+        public readonly decimal _buyPrice;
+        public readonly decimal _memberPrice;
+        public readonly decimal _notMemberPrice;
         public string Packaging { get; set; }
-        protected Product(string productName, PriceInformation priceInformation)
+        protected Product(ProductInformation info)
         {
-            _productName = productName;
-            _priceInformation = priceInformation;
+            _productName = info._productName;
+            _buyPrice = info._buyPrice;
+            _memberPrice = info._memberPrice;
+            _notMemberPrice = info._notMemberPrice;
         }
     }
 }

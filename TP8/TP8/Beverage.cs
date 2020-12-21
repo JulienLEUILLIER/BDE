@@ -6,7 +6,7 @@ namespace TP8
 {
     public class Beverage : Product
     {
-        public Beverage(string productName, PriceInformation priceInformation) : base(productName, priceInformation)
+        public Beverage(ProductInformation info) : base(info)
         {
             Packaging = "Bottle";
         }

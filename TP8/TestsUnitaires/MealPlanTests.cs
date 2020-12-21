@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TP8;
 
-namespace TestsUnitaires.DataGenerator
+namespace TestsUnitaires
 {
-    internal class MealProducts
+    public class MealPlanTests
     {
-
+         
     }
 }

@@ -6,13 +6,21 @@ namespace TP8
 {
     public class MealPlan
     {
-        private readonly List<Product> MealProducts = new List<Product>();
+        public readonly List<Product> MealProducts = new List<Product>();
 
-        public void AddProductToList(Product product)
+        public void AddToMeal(Product product)
         {
-
+            MealProducts.Add(product);
         }
 
-        public void Add
+        public decimal GetTotalPriceMember()
+        {
+            return 0;
+        }
+
+        public decimal GetTotalPriceNotMember()
+        {
+            return 0;
+        }
     }
 }
