@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TP8
 {
-    public class AlcoholicBeverage : Product
+    public class AlcoholicBeverage : Beverage
     {
         public readonly float _alcoholDegree;
 

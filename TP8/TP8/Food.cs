@@ -8,6 +8,7 @@ namespace TP8
     {
         public Food(string productName, PriceInformation priceInformation) : base(productName, priceInformation)
         {
+            Packaging = "Paper bag";
         }
     }
 }
