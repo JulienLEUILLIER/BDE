@@ -15,10 +15,11 @@ namespace TestsUnitaires
         
         public SellingTests()
         {
-            chips = generator.Chips();
+            Commercial factory = generator.factory;
+            chips = factory.AddAndOrderProduct(generator.InfoChips());
+            factory.AddToStock(sut, chips, 50);
             sut.AddClient(john, 20m);
             sut.AddClient(jane, 30m);
-            generator.factory.AddToStock(sut, "chips", 50);
             sut.SellProduct(john, chips, 5);
             sut.SellProduct(jane, chips, 3);
         }

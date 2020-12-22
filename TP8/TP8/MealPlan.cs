@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace TP8
 {
@@ -15,12 +16,18 @@ namespace TP8
 
         public decimal GetTotalPriceMember()
         {
-            return 0;
+            //decimal price = 0;
+            //foreach (Product product in MealProducts)
+            //{
+            //    price += product._memberPrice;
+            //}
+            //return price;
+            return MealProducts.Sum(product => product._memberPrice);
         }
 
         public decimal GetTotalPriceNotMember()
         {
-            return 0;
+            return MealProducts.Sum(product => product._notMemberPrice);
         }
     }
 }

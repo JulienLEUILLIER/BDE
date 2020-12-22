@@ -54,10 +54,9 @@ namespace TestsUnitaires
         public void OrderingIntoStockTest()
         {
             Stock stock = office._currentStock;
-            Product chipsOrder = generator.Chips();
+            Product chips = generator.Chips();
 
-            generator.factory.AddToStock(office, "chips", 5);
-            Product chips = stock.GetProductByName("chips");
+            generator.factory.AddToStock(office, chips, 5);
 
             Assert.Equal(5, stock._StockProduct[chips]);
         }

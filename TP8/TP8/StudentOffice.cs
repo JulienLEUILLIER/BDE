@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TP8
 {
-    public sealed class StudentOffice
+    public sealed class StudentOffice : ISubscriber
     {
         //private static StudentOffice instance = new StudentOffice();
 
@@ -51,6 +51,10 @@ namespace TP8
             {
                 _ClientList.Add(client, balance);
             }
+        }
+        public void Update(IPublisher publisher, KeyValuePair<Product, int> kvp)
+        {
+            
         }
 
         public void SellProduct(Client client, Product product, int number)

@@ -6,7 +6,7 @@ namespace TP8
 {
     public class MealPlanPreparator : IAssembler
     {
-        private MealPlan _mealplan = new MealPlan();
+        protected MealPlan _mealplan = new MealPlan();
 
         public MealPlanPreparator()
         {
@@ -18,19 +18,19 @@ namespace TP8
             _mealplan = new MealPlan();
         }
 
-        public void AddMainMeal()
+        public virtual void AddMainMeal(Food food)
         {
-
+            _mealplan.AddToMeal(food);
         }
 
-        public void AddBeverage()
+        public void AddBeverage(Beverage beverage)
         {
-
+            _mealplan.AddToMeal(beverage);
         }
 
-        public void AddDessert()
+        public virtual void AddDessert(Food food)
         {
-
+            _mealplan.AddToMeal(food);
         }
     }
 }

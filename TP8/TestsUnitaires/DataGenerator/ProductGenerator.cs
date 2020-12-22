@@ -30,17 +30,17 @@ namespace TestsUnitaires.DataGenerator
 
         internal Product Water()
         {
-            return factory.GetProduct(InfoWater());
+            return factory.AddAndOrderProduct(InfoWater());
         }
 
         internal Product Chips()
         {
-            return factory.GetProduct(InfoChips());
+            return factory.AddAndOrderProduct(InfoChips());
         }
 
         internal Product Beer()
         {
-            return factory.GetProduct(InfoBeer());
+            return factory.AddAndOrderProduct(InfoBeer());
         }
     }
 }

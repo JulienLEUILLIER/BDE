@@ -27,14 +27,13 @@ namespace TP8
             Brochure.Add(productinfo);
         }
 
-        public void AddToStock(StudentOffice office, string productName, int quantity)
+        public void AddToStock(StudentOffice office, Product product, int quantity)
         {
             Stock stock = office._currentStock;
-            Product orderedProduct = Order(productName);
-            stock.AddProduct(orderedProduct, quantity);
+            stock.AddProduct(product, quantity);
         }
 
-        public Product GetProduct(ProductInformation info)
+        public Product AddAndOrderProduct(ProductInformation info)
         {
             this.AddProduct(info);
             return this.Order(info._productName);

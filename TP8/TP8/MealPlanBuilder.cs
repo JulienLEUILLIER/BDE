@@ -10,22 +10,44 @@ namespace TP8
 
         public IAssembler Assembler { set { _assembler = value; } }
 
-        public void DessertDrinkMeal()
+        public void DessertDrinkMeal(Food food, Beverage beverage)
         {
-            _assembler.AddDessert();
-            _assembler.AddBeverage();
+            _assembler.AddDessert(food);
+            _assembler.AddBeverage(beverage);
         }
 
-        public void SandwichBeverageMeal()
+        public void SandwichBeverageMeal(Food food, Beverage beverage)
         {
-            _assembler.AddMainMeal();
-            _assembler.AddBeverage();
+            _assembler.AddMainMeal(food);
+            _assembler.AddBeverage(beverage);
         }
 
-        public void CompleteMeal()
+        public void CompleteMeal(Food mainfood, Food dessertfood, Beverage beverage)
         {
-            SandwichBeverageMeal();
-            _assembler.AddDessert();
+            SandwichBeverageMeal(mainfood, beverage);
+            _assembler.AddDessert(dessertfood);
+        }
+
+        public void VeggieDessertDrinkMeal(Food food, Beverage beverage)
+        {
+            _assembler = new MealPlanPreparatorVeggie();
+            DessertDrinkMeal(food, beverage);
+        }
+
+        public void SaladAndVirginDrink(Food food, Beverage beverage)
+        {
+            _assembler = new MealPlanPreparatorVeggie();
+            _assembler.AddMainMeal(food);
+            if (!(beverage is AlcoholicBeverage))
+            {
+                _assembler.AddBeverage(beverage);
+            }
+        }
+
+        public void VeggieCompleteMeal(Food mainfood, Food dessertfood, Beverage beverage)
+        {
+            _assembler = new MealPlanPreparatorVeggie();
+            CompleteMeal(mainfood, dessertfood, beverage);
         }
     }
 }

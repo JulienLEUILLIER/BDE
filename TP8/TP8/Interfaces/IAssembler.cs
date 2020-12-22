@@ -6,8 +6,8 @@ namespace TP8
 {
     public interface IAssembler
     {
-        void AddMainMeal();
-        void AddBeverage();
-        void AddDessert();
+        void AddMainMeal(Food food);
+        void AddBeverage(Beverage beverage);
+        void AddDessert(Food food);
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TP8
 {
-    public class Stock
+    public class Stock : AbstractPublisher
     {
         private decimal _currentBalance;
 
@@ -50,11 +50,23 @@ namespace TP8
         {
             CheckStockChange(product, -quantity);
             SetBalance(client.GetAppropriatePrice(product) * quantity);
+            this.Notify(10);
         }
 
         public void SetBalance(decimal amount)
         {
             _currentBalance += amount;
+        }
+
+        public override void Notify(int minimalQuantity)
+        {
+            foreach (var observer in _subscribers)
+            {
+                foreach (KeyValuePair<Product, int> kvp in _StockProduct)
+                { 
+                        observer.Update(this, kvp);
+                }
+            }
         }
 
         public void DisplayStockConsole()
