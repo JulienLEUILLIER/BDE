@@ -6,6 +6,6 @@ namespace TP8
 {
     public interface ISubscriber
     {
-        public void Update(IPublisher publisher, KeyValuePair<Product, int> kvp);
+        public void Update(IPublisher publisher, Product product);
     }
 }

@@ -7,7 +7,7 @@ namespace TP8
 {
     public class Commercial
     {
-        private readonly HashSet<ProductInformation> Brochure = new HashSet<ProductInformation>();
+        public readonly HashSet<ProductInformation> Brochure = new HashSet<ProductInformation>();
         public Product Order(string productname)
         {
             ProductInformation productInformation = 
@@ -31,12 +31,6 @@ namespace TP8
         {
             Stock stock = office._currentStock;
             stock.AddProduct(product, quantity);
-        }
-
-        public Product AddAndOrderProduct(ProductInformation info)
-        {
-            this.AddProduct(info);
-            return this.Order(info._productName);
         }
     }
 }

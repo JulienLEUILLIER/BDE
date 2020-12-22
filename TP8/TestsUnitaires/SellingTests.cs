@@ -6,20 +6,21 @@ namespace TestsUnitaires
 {
     public class SellingTests
     {
-        private readonly StudentOffice sut = new StudentOffice();
+        private readonly StudentOfficeBuilder builder;
+        private readonly StudentOffice sut;
         private readonly Client john = Clients.John();
         private readonly Client jane = Clients.Jane();
-        private readonly ProductGenerator generator = new ProductGenerator();
+        private readonly ProductGenerator generator;
         private readonly Product chips;
 
         
         public SellingTests()
         {
-            Commercial factory = generator.factory;
-            chips = factory.AddAndOrderProduct(generator.InfoChips());
-            factory.AddToStock(sut, chips, 50);
-            sut.AddClient(john, 20m);
-            sut.AddClient(jane, 30m);
+            builder = new StudentOfficeBuilder();
+            sut = builder.office;
+
+
+
             sut.SellProduct(john, chips, 5);
             sut.SellProduct(jane, chips, 3);
         }

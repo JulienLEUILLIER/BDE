@@ -8,12 +8,7 @@ namespace TP8
     {
         static void Main(string[] args)
         {
-            Stock stock = new Stock();
-            Commercial factory = new Commercial();
-            ProductInformation info = new ProductInformation("chips", EnumTypeProduct.Food, 1.0m, 2.0m, 3.0m);
-            Product prod = factory.AddAndOrderProduct(info);
-            stock.AddProduct(prod, 5);
-            Console.WriteLine(stock._StockProduct[prod]);
+
         }
     }
 }

@@ -15,12 +15,17 @@ namespace TP8
 
         public Product GetProductByName(string name)
         {
-            return _StockProduct.FirstOrDefault(KeyValuePair => KeyValuePair.Key._productName.Equals(name)).Key;
+            return _StockProduct.FirstOrDefault(kvp => kvp.Key._productName.ToUpper().Equals(name.ToUpper())).Key;
         }
 
-        public Stock()
+        public int GetProductQuantity(string name)
         {
-            _currentBalance = 100m;
+            return _StockProduct[GetProductByName(name)];
+        }
+
+        public Stock(decimal balance)
+        {
+            _currentBalance = balance;
         }
 
         public void AddProduct(Product product, int quantity)
@@ -50,7 +55,10 @@ namespace TP8
         {
             CheckStockChange(product, -quantity);
             SetBalance(client.GetAppropriatePrice(product) * quantity);
-            this.Notify(10);
+            if (GetProductQuantity(product._productName) < 10)
+            {
+                this.Notify(product);
+            }
         }
 
         public void SetBalance(decimal amount)
@@ -58,14 +66,11 @@ namespace TP8
             _currentBalance += amount;
         }
 
-        public override void Notify(int minimalQuantity)
+        public override void Notify(Product product)
         {
             foreach (var observer in _subscribers)
-            {
-                foreach (KeyValuePair<Product, int> kvp in _StockProduct)
-                { 
-                        observer.Update(this, kvp);
-                }
+            {                
+                observer.Update(this, product);                
             }
         }
 

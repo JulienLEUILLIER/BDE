@@ -6,23 +6,27 @@ namespace TestsUnitaires
 {
     public class StockTests
     {
+        private StudentOfficeBuilder builder;
         private readonly Stock sut;
-        private readonly ProductGenerator generator = new ProductGenerator();
-        private readonly Product chips;
-        private readonly Product beer;
-        private readonly Client john = Clients.John();
+        private readonly Client john;
+        private readonly Product chips, beer;
 
         public StockTests()
         {
-            chips = generator.Chips();
-            beer = generator.Beer();
-            sut = new Stock();
-            sut.AddProduct(chips, 10);
+            builder = new StudentOfficeBuilder();
+            sut = builder.office._currentStock;
+            john = builder.john;
+            chips = builder.products.chips; beer = builder.products.beer;
         }
         [Fact]
         public void GetTheRightProduct()
         {
-            Assert.Equal(chips, sut.GetProductByName(chips._productName));
+            Assert.Equal(chips, sut.GetProductByName("chips"));
+        }
+        [Fact]
+        public void GetTheRightQuantity()
+        {
+            Assert.Equal(10, sut.GetProductQuantity("chips"));
         }
         [Fact]
         public void TestSubstractingProduct()

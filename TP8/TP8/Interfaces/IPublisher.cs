@@ -8,6 +8,6 @@ namespace TP8
     {
         public void Attach(ISubscriber subscriber);
         public void Detach(ISubscriber subscriber);
-        public void Notify(int minimalQuantity);
+        public void Notify(Product product);
     }
 }

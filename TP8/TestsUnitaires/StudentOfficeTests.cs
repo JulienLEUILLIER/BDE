@@ -6,13 +6,15 @@ namespace TestsUnitaires
 {
     public class StudentOfficeTests
     {
-        private readonly StudentOffice sut;
-        private readonly Client john = Clients.John();
-        private readonly Client jane = Clients.Jane();
+        private readonly StudentOfficeBuilder sut;
+        private readonly StudentOffice office;
+        private readonly Client john, jane;
 
         public StudentOfficeTests()
         {
-            sut = new StudentOffice();
+            sut = new StudentOfficeBuilder();
+            office = sut.office;
+            john = sut.john; jane = sut.jane;
         }
         [Fact]
         public void TestFormatName()
@@ -23,23 +25,23 @@ namespace TestsUnitaires
         [Fact]
         public void GetRightClient()
         {
-            sut._ClientList.Add(john, 5);
+            sut.office._ClientList.Add(john, 5);
 
-            Assert.True(sut.GetClientByName(john.GetName()));
+            Assert.True(office.GetClientByName(john.GetName()));
         }
         [Fact]
         public void AddingSingleStudentTest()
         {
-            sut.AddClient(john, 5m);
+            office.AddClient(john, 5m);
 
-            Assert.Single(sut._ClientList);
+            Assert.Single(office._ClientList);
         }
         [Fact]
         public void AddingOtherClientTest()
         {
-            sut.AddClient(jane, 5m);
+            office.AddClient(jane, 5m);
 
-            Assert.Single(sut._ClientList);
+            Assert.Single(office._ClientList);
         }
         [Fact]
         public void ClientTypeTest()
@@ -47,11 +49,11 @@ namespace TestsUnitaires
             Client pierre = Clients.CreateClient("dupont", "pierre", 25, 2006);
             Client jean = Clients.CreateClient("moulin", "jean", 42);
 
-            sut.AddClient(pierre, 5m);
-            sut.AddClient(jean, 7m);
+            office.AddClient(pierre, 5m);
+            office.AddClient(jean, 7m);
 
-            Assert.True(sut.GetClientByName(pierre.GetName()));
-            Assert.True(sut.GetClientByName(jean.GetName()));
+            Assert.True(office.GetClientByName(pierre.GetName()));
+            Assert.True(office.GetClientByName(jean.GetName()));
             Assert.IsType<Student>(pierre);
             Assert.IsType<OtherClient>(jean);
         }

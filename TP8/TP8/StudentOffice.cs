@@ -34,10 +34,12 @@ namespace TP8
         public readonly Dictionary<Client, decimal> _ClientList = new Dictionary<Client, decimal>();
 
         public readonly Stock _currentStock;
+        public readonly Commercial _commercial;
 
-        public StudentOffice()
+        public StudentOffice(decimal balance)
         {
-            _currentStock = new Stock();
+            _currentStock = new Stock(balance);
+            _commercial = new Commercial();
         }
 
         public bool GetClientByName(string name)
@@ -52,9 +54,9 @@ namespace TP8
                 _ClientList.Add(client, balance);
             }
         }
-        public void Update(IPublisher publisher, KeyValuePair<Product, int> kvp)
+        public void Update(IPublisher publisher, Product product)
         {
-            
+            _commercial.AddToStock(this, product, 40);
         }
 
         public void SellProduct(Client client, Product product, int number)
@@ -65,6 +67,15 @@ namespace TP8
                 _currentStock.CheckStockChange(product, -number);
                 _ClientList[client] -= appropriatePrice;
                 _currentStock.SetBalance(appropriatePrice);
+            }
+        }
+
+        public void SellMealPlan(IAssembler assembler, Client client)
+        {
+            MealPlan mealPlan = assembler.GetMealPlan();
+            foreach (var product in mealPlan.MealProducts)
+            {
+                SellProduct(client, product, 1);
             }
         }
 

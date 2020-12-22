@@ -6,7 +6,7 @@ namespace TP8
 {
     public class MealPlanPreparatorVeggie : MealPlanPreparator
     {
-        public override void AddDessert(Food food)
+        public override void AddDessert(Product food)
         {
             if (food._isVeggie)
             {
@@ -14,7 +14,7 @@ namespace TP8
             }
         }
 
-        public override void AddMainMeal(Food food)
+        public override void AddMainMeal(Product food)
         {
             if (food._isVeggie)
             {

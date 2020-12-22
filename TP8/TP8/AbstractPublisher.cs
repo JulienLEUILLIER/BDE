@@ -18,7 +18,7 @@ namespace TP8
             _subscribers.Remove(subscriber);
         }
 
-        public virtual void Notify(int minimalQuantity)
+        public virtual void Notify(Product product)
         {            
         }
     }
