@@ -19,33 +19,36 @@ namespace TestsUnitaires
         [Fact]
         public void TestFormatName()
         {
+            // Testing formatting name
             Assert.Equal("DOE John", john.GetName());
         }
 
         [Fact]
         public void GetRightClient()
         {
-            sut.office._ClientList.Add(john, 5);
-
+            // Testing if the client exists in the client list of the student office
             Assert.True(office.GetClientByName(john.GetName()));
         }
         [Fact]
         public void AddingSingleStudentTest()
         {
-            office.AddClient(john, 5m);
-
-            Assert.Single(office._ClientList);
+            // Testing adding a single client of type Student to an empty student office
+            StudentOffice instantTest = new StudentOffice(0);
+            instantTest.AddClient(jane,0);
+            Assert.Single(instantTest._ClientList);
         }
         [Fact]
         public void AddingOtherClientTest()
         {
-            office.AddClient(jane, 5m);
-
-            Assert.Single(office._ClientList);
+            // Testing adding a single client of type OtherClient to an empty student office
+            StudentOffice instantTest = new StudentOffice(0);
+            instantTest.AddClient(john, 0);
+            Assert.Single(instantTest._ClientList);
         }
         [Fact]
         public void ClientTypeTest()
         {
+            // Testing if creation of clients gets back the right type of client
             Client pierre = Clients.CreateClient("dupont", "pierre", 25, 2006);
             Client jean = Clients.CreateClient("moulin", "jean", 42);
 

@@ -13,16 +13,16 @@ namespace TP8
             ProductInformation productInformation = 
                 Brochure.FirstOrDefault(pr => pr._productName.ToUpper().Equals(productname.ToUpper()));
 
-            return productInformation._typeProduct switch
-            {
-                EnumTypeProduct.Beverage => new Beverage(productInformation),
-                EnumTypeProduct.Food => new Food(productInformation),
-                EnumTypeProduct.AlcoholicBeverage => new AlcoholicBeverage(productInformation),
-                _ => throw new NotImplementedException(),
-            };
+                return productInformation._typeProduct switch
+                {
+                    EnumTypeProduct.Beverage => new Beverage(productInformation),
+                    EnumTypeProduct.Food => new Food(productInformation),
+                    EnumTypeProduct.AlcoholicBeverage => new AlcoholicBeverage(productInformation),
+                    _ => throw new NotImplementedException(),
+                };            
         }
 
-        public void AddProduct(ProductInformation productinfo)
+        public void AddToBrochure(ProductInformation productinfo)
         {
             Brochure.Add(productinfo);
         }
@@ -30,6 +30,7 @@ namespace TP8
         public void AddToStock(StudentOffice office, Product product, int quantity)
         {
             Stock stock = office._currentStock;
+
             stock.AddProduct(product, quantity);
         }
     }

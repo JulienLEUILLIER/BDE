@@ -7,7 +7,7 @@ namespace TestsUnitaires.DataGenerator
 {
     internal class StudentOfficeBuilder
     {
-        internal readonly StudentOffice office = new StudentOffice(500m);
+        internal readonly StudentOffice office = new StudentOffice(1000m);
         internal readonly Commercial commercial;
         internal readonly Stock stock;
         internal readonly ProductGenerator products;
@@ -21,14 +21,17 @@ namespace TestsUnitaires.DataGenerator
             commercial = office._commercial;
             stock = office._currentStock;
             products = new ProductGenerator(commercial);
+            mealPlanBuilder = new MealPlanBuilder();
             products.InitializeProducts();
+            InitializeStock();
+            office.AddClient(john, 50); office.AddClient(jane, 50);
         }
 
         internal void InitializeStock()
         {
             foreach (ProductInformation info in commercial.Brochure)
             {
-                commercial.AddToStock(office, commercial.Order(info._productName), 50);
+                stock.AddProduct(commercial.Order(info._productName), 50);
             }
         }
     }

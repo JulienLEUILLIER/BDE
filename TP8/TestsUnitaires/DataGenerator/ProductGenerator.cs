@@ -21,15 +21,15 @@ namespace TestsUnitaires.DataGenerator
             water = _factory.Order("water");
             coca = _factory.Order("coca");
             sandwich = _factory.Order("sandwich");
-            veggiesandwich = _factory.Order("veggiesandwich");
+            veggiesandwich = _factory.Order("veggie sandwich");
             chips = _factory.Order("chips");
-            chocolatebar = _factory.Order("chocolatebar");
+            chocolatebar = _factory.Order("chocolate bar");
             cake = _factory.Order("cake");
             beer = _factory.Order("beer");
         }
         internal ProductInformation InfoWater()
         {
-            return new ProductInformation("eau", EnumTypeProduct.Beverage, 0.5m, 0.75m, 1.0m);
+            return new ProductInformation("water", EnumTypeProduct.Beverage, 0.5m, 0.75m, 1.0m);
         }
 
         internal ProductInformation InfoChips()
@@ -69,42 +69,42 @@ namespace TestsUnitaires.DataGenerator
 
         internal void Water()
         {
-            _factory.AddProduct(InfoWater());
+            _factory.AddToBrochure(InfoWater());
         }
 
         internal void Chips()
         {
-            _factory.AddProduct(InfoChips());
+            _factory.AddToBrochure(InfoChips());
         }
 
         internal void Beer()
         {
-            _factory.AddProduct(InfoBeer());
+            _factory.AddToBrochure(InfoBeer());
         }
 
         internal void ChocolateBar()
         {
-            _factory.AddProduct(InfoChocolateBar());
+            _factory.AddToBrochure(InfoChocolateBar());
         }
 
         internal void Coca()
         {
-            _factory.AddProduct(InfoCoca());
+            _factory.AddToBrochure(InfoCoca());
         }
 
         internal void Sandwich()
         {
-            _factory.AddProduct(InfoSandwich());
+            _factory.AddToBrochure(InfoSandwich());
         }
 
         internal void VeggieSandwich()
         {
-            _factory.AddProduct(InfoVeggieSandwich());
+            _factory.AddToBrochure(InfoVeggieSandwich());
         }
 
         internal void Cake()
         {
-            _factory.AddProduct(InfoCake());
+            _factory.AddToBrochure(InfoCake());
         }
     }
 }

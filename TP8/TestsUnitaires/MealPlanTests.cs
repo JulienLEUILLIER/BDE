@@ -22,8 +22,14 @@ namespace TestsUnitaires
             MealPlanPreparator preparator = new MealPlanPreparator();
 
             preparator.AddBeverage(sut.products.beer);
-
+            
             Assert.Single(preparator._mealplan.MealProducts);
+        }
+
+        [Fact]
+        public void SettingUpMealPlan()
+        {
+
         }
     }
 }
