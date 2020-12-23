@@ -50,15 +50,15 @@ namespace TP8
             {
                 _StockProduct[product] += quantity;
             }
-        }
-        public void SubstractProduct(Product product, int quantity, Client client)
-        {
-            CheckStockChange(product, -quantity);
-            SetBalance(client.GetAppropriatePrice(product) * quantity);
             if (GetProductQuantity(product._productName) < 10)
             {
                 this.Notify(product);
             }
+        }
+        public void SubstractProduct(Product product, int quantity, Client client)
+        {
+            CheckStockChange(product, -quantity);
+            SetBalance(client.GetAppropriatePrice(product) * quantity);         
         }
 
         public void SetBalance(decimal amount)

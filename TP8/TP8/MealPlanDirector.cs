@@ -4,39 +4,39 @@ using System.Text;
 
 namespace TP8
 {
-    public class MealPlanBuilder
+    public class MealPlanDirector
     {
         private IAssembler _assembler;
 
-        public IAssembler Assembler { set { _assembler = value; } }
+        public IAssembler Assembler { get => _assembler; set => _assembler = value; }
 
-        public void DessertDrinkMeal(Food food, Beverage beverage)
+        public void DessertDrinkMeal(Product food, Product beverage)
         {
             _assembler.AddDessert(food);
             _assembler.AddBeverage(beverage);
         }
 
-        public void SandwichBeverageMeal(Food food, Beverage beverage)
+        public void SandwichBeverageMeal(Product food, Product beverage)
         {
             _assembler.AddMainMeal(food);
             _assembler.AddBeverage(beverage);
         }
 
-        public void CompleteMeal(Food mainfood, Food dessertfood, Beverage beverage)
+        public void CompleteMeal(Product mainfood, Product dessertfood, Product beverage)
         {
             SandwichBeverageMeal(mainfood, beverage);
             _assembler.AddDessert(dessertfood);
         }
 
-        public void VeggieDessertDrinkMeal(Food food, Beverage beverage)
+        public void VeggieDessertDrinkMeal(Product food, Product beverage)
         {
-            _assembler = new MealPlanPreparatorVeggie();
+            _assembler = new MealPlanConcreteBuilderVeggie();
             DessertDrinkMeal(food, beverage);
         }
 
-        public void SaladAndVirginDrink(Food food, Beverage beverage)
+        public void SaladAndVirginDrink(Product food, Product beverage)
         {
-            _assembler = new MealPlanPreparatorVeggie();
+            _assembler = new MealPlanConcreteBuilderVeggie();
             _assembler.AddMainMeal(food);
             if (!(beverage is AlcoholicBeverage))
             {
@@ -44,9 +44,9 @@ namespace TP8
             }
         }
 
-        public void VeggieCompleteMeal(Food mainfood, Food dessertfood, Beverage beverage)
+        public void VeggieCompleteMeal(Product mainfood, Product dessertfood, Product beverage)
         {
-            _assembler = new MealPlanPreparatorVeggie();
+            _assembler = new MealPlanConcreteBuilderVeggie();
             CompleteMeal(mainfood, dessertfood, beverage);
         }
     }

@@ -11,7 +11,7 @@ namespace TestsUnitaires.DataGenerator
         internal readonly Commercial commercial;
         internal readonly Stock stock;
         internal readonly ProductGenerator products;
-        internal readonly MealPlanBuilder mealPlanBuilder;
+        internal readonly MealPlanDirector mealPlanBuilder;
         internal Client john = Clients.John();
         internal Client jane = Clients.Jane();
         internal Client underage = Clients.Underage();
@@ -21,10 +21,11 @@ namespace TestsUnitaires.DataGenerator
             commercial = office._commercial;
             stock = office._currentStock;
             products = new ProductGenerator(commercial);
-            mealPlanBuilder = new MealPlanBuilder();
+            mealPlanBuilder = new MealPlanDirector();
             products.InitializeProducts();
             InitializeStock();
             office.AddClient(john, 50); office.AddClient(jane, 50);
+            stock.Attach(office);
         }
 
         internal void InitializeStock()

@@ -59,5 +59,16 @@ namespace TestsUnitaires
             // Office balance was 237.5 before the sell
             Assert.Equal(251m, sut._currentStock.CurrentBalance);
         }
+
+        [Fact]
+        public void NotifyingTest()
+        {
+            // Test of the observer pattern : stock was at 42, 40 are sold, 40 are ordered
+            sut.SellProduct(john, chips, 40);
+            Stock stock = sut._currentStock;
+            Product stockedChips = stock.GetProductByName("chips");
+
+            Assert.Equal(42, sut._currentStock._StockProduct[stockedChips]);
+        }
     }
 }

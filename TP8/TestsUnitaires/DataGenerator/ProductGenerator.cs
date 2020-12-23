@@ -7,7 +7,7 @@ namespace TestsUnitaires.DataGenerator
 {
     internal class ProductGenerator
     {
-        private Commercial _factory;
+        private readonly Commercial _factory;
         internal Product water, coca, sandwich, veggiesandwich, chips, chocolatebar, cake, beer;
 
         internal ProductGenerator(Commercial factory)

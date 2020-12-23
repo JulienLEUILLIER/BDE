@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TP8
 {
-    public class MealPlanPreparator : IAssembler
+    public class MealPlanConcreteBuilder : IAssembler
     {
         public MealPlan _mealplan = new MealPlan();
 
-        public MealPlanPreparator()
+        public MealPlanConcreteBuilder()
         {
             Reset();
         }

@@ -6,7 +6,7 @@ namespace TP8
 {
     public class Food : Product
     {
-        public readonly bool _isVeggie;
+        public new readonly bool _isVeggie;
         public Food(ProductInformation info) : base(info)
         {
             _isVeggie = info._isVeggie;

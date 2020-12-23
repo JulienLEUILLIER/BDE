@@ -6,7 +6,7 @@ namespace TestsUnitaires
 {
     public class StockTests
     {
-        private StudentOfficeBuilder builder;
+        private readonly StudentOfficeBuilder builder;
         private readonly Stock sut;
         private readonly ProductGenerator generator;
         private readonly Client john;

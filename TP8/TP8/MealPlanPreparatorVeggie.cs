@@ -4,22 +4,46 @@ using System.Text;
 
 namespace TP8
 {
-    public class MealPlanPreparatorVeggie : MealPlanPreparator
+    public class MealPlanConcreteBuilderVeggie : IAssembler
     {
-        public override void AddDessert(Product food)
+        public MealPlan _mealplan = new MealPlan();
+
+        public MealPlanConcreteBuilderVeggie()
+        {
+            Reset();
+        }
+
+        public void Reset()
+        {
+            _mealplan = new MealPlan();
+        }
+        public void AddDessert(Product food)
         {
             if (food._isVeggie)
             {
-                base.AddDessert(food);
+                _mealplan.AddToMeal(food);
             }
         }
 
-        public override void AddMainMeal(Product food)
+        public void AddMainMeal(Product food)
         {
             if (food._isVeggie)
             {
-                base.AddMainMeal(food);
+                _mealplan.AddToMeal(food);
             }
+        }
+        public void AddBeverage(Product beverage)
+        {
+            _mealplan.AddToMeal(beverage);
+        }
+
+        public MealPlan GetMealPlan()
+        {
+            MealPlan mealplan = this._mealplan;
+
+            this.Reset();
+
+            return mealplan;
         }
     }
 }
