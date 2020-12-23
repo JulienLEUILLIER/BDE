@@ -12,6 +12,7 @@ namespace TestsUnitaires
         private readonly StudentOfficeBuilder office;
         private readonly MealPlanDirector sut;
         private readonly MealPlanConcreteBuilder preparator;
+        private readonly MealPlanConcreteBuilderVeggie veggiepreparator;
         private readonly ProductGenerator products;
 
         public MealPlanTests()
@@ -19,6 +20,7 @@ namespace TestsUnitaires
             office = new StudentOfficeBuilder();
             sut = new MealPlanDirector();
             preparator = new MealPlanConcreteBuilder();
+            veggiepreparator = new MealPlanConcreteBuilderVeggie();
             sut.Assembler = preparator;
             products = office.products;
         }
@@ -36,7 +38,6 @@ namespace TestsUnitaires
         public void ResettingMealPlan()
         {
             // Testing if resetting the meal plan after getting it works correctly
-            preparator.AddBeverage(office.products.beer);
 
             var mealplan = preparator.GetMealPlan();
 
@@ -57,9 +58,10 @@ namespace TestsUnitaires
         [Fact]
         public void CheckingVeggieMeal()
         {
+            sut.Assembler = veggiepreparator;
             sut.VeggieCompleteMeal(products.veggiesandwich, products.chocolatebar, products.water);
 
-            MealPlan mealPlan = preparator.GetMealPlan();
+            MealPlan mealPlan = veggiepreparator.GetMealPlan();
 
             Assert.Equal(3, mealPlan.MealProducts.Count);
         }

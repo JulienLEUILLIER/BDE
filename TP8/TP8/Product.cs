@@ -10,7 +10,7 @@ namespace TP8
         public readonly decimal _buyPrice;
         public readonly decimal _memberPrice;
         public readonly decimal _notMemberPrice;
-        public bool _isVeggie = true;
+        public bool _isVeggie;
 
         public string Packaging { get; set; }
         protected Product(ProductInformation info)
@@ -19,6 +19,7 @@ namespace TP8
             _buyPrice = info._buyPrice;
             _memberPrice = info._memberPrice;
             _notMemberPrice = info._notMemberPrice;
+            _isVeggie = info._isVeggie;
         }
     }
 }

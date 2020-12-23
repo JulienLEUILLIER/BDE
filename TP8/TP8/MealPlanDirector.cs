@@ -46,7 +46,6 @@ namespace TP8
 
         public void VeggieCompleteMeal(Product mainfood, Product dessertfood, Product beverage)
         {
-            _assembler = new MealPlanConcreteBuilderVeggie();
             CompleteMeal(mainfood, dessertfood, beverage);
         }
     }
