@@ -68,9 +68,9 @@ namespace TP8
 
         public override void Notify(Product product)
         {
-            foreach (var observer in _subscribers)
-            {                
-                observer.Update(this, product);                
+            foreach (var subscriber in _subscribers)
+            {
+                subscriber.Update(this, product);
             }
         }
 

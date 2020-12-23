@@ -9,27 +9,29 @@ namespace TestsUnitaires
 {
     public class MealPlanTests
     {
-        private readonly StudentOfficeBuilder office;
+        private readonly StudentOfficeBuilder builder;
         private readonly MealPlanDirector sut;
         private readonly MealPlanConcreteBuilder preparator;
         private readonly MealPlanConcreteBuilderVeggie veggiepreparator;
         private readonly ProductGenerator products;
+        private readonly Client john;
 
         public MealPlanTests()
         {
-            office = new StudentOfficeBuilder();
+            builder = new StudentOfficeBuilder();
             sut = new MealPlanDirector();
             preparator = new MealPlanConcreteBuilder();
             veggiepreparator = new MealPlanConcreteBuilderVeggie();
             sut.Assembler = preparator;
-            products = office.products;
+            products = builder.products;
+            john = builder.john;
         }
 
         [Fact]
         public void AddingMealComponentTest()
         {
             // Testing if products are correctly added to meal plan
-            preparator.AddBeverage(office.products.beer);
+            preparator.AddBeverage(builder.products.beer);
             
             Assert.Single(preparator._mealplan.MealProducts);
         }
@@ -64,6 +66,17 @@ namespace TestsUnitaires
             MealPlan mealPlan = veggiepreparator.GetMealPlan();
 
             Assert.Equal(3, mealPlan.MealProducts.Count);
+        }
+
+        [Fact]
+        public void MealPlanSellingTest()
+        {
+            sut.CompleteMeal(products.sandwich, products.chocolatebar, products.water);
+            StudentOffice studentoffice = builder.office;
+
+            studentoffice.SellMealPlan(preparator, john);
+
+            Assert.Equal(44.5m, studentoffice._ClientList[john]);
         }
     }
 }
