@@ -54,9 +54,10 @@ namespace TP8
                 _ClientList.Add(client, balance);
             }
         }
-        public void Update(IPublisher publisher, Product product)
+        public void Update(Product product)
         {
-            _commercial.AddToStock(this, product, 40);
+            Order newOrder = _commercial.OrderedProduct(product._productName, 40);
+            _commercial.AddToStock(_currentStock, newOrder);
         }
 
         public void SellProduct(Client client, Product product, int number)

@@ -13,6 +13,18 @@ namespace TP8
 
         public Dictionary<Product, int> _StockProduct = new Dictionary<Product, int>();
 
+        public IOrderingRepository Repository { get; set; }
+
+        public Stock(decimal balance, IOrderingRepository repository)
+        {
+            _currentBalance = balance;
+            Repository = repository;
+        }
+
+        public Stock(decimal balance) : this(balance, new OrderingRepository())
+        {
+        }
+
         public Product GetProductByName(string name)
         {
             return _StockProduct.FirstOrDefault(kvp => kvp.Key._productName.ToUpper().Equals(name.ToUpper())).Key;
@@ -23,24 +35,21 @@ namespace TP8
             return _StockProduct[GetProductByName(name)];
         }
 
-        public Stock(decimal balance)
+        public void AddProduct(Order OrderType)
         {
-            _currentBalance = balance;
-        }
-
-        public void AddProduct(Product product, int quantity)
-        {
-            Product currentProduct = GetProductByName(product._productName);
+            Product currentProduct = GetProductByName(OrderType._product._productName);
+            int quantity = OrderType._quantity;
             
             if (currentProduct == null)
             {
-                _StockProduct.Add(product, quantity);
+                _StockProduct.Add(OrderType._product, quantity);
+                SetBalance(-quantity * OrderType._product._buyPrice);
             }
-            else if (_currentBalance >= quantity * product._buyPrice && quantity > 0)
+            else if (_currentBalance >= quantity * currentProduct._buyPrice && quantity > 0)
             {
                 CheckStockChange(currentProduct, quantity);
-            }
-            SetBalance(-quantity * product._buyPrice);
+                SetBalance(-quantity * currentProduct._buyPrice);
+            }            
         }
 
         public void CheckStockChange(Product product, int quantity)
@@ -52,7 +61,7 @@ namespace TP8
             }
             if (GetProductQuantity(product._productName) < 10)
             {
-                this.Notify(product);
+                Notify(product);
             }
         }
         public void SubstractProduct(Product product, int quantity, Client client)
@@ -70,7 +79,7 @@ namespace TP8
         {
             foreach (var subscriber in _subscribers)
             {
-                subscriber.Update(this, product);
+                subscriber.Update(product);
             }
         }
 

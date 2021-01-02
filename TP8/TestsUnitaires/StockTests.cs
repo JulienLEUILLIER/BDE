@@ -8,17 +8,13 @@ namespace TestsUnitaires
     {
         private readonly StudentOfficeBuilder builder;
         private readonly Stock sut;
-        private readonly ProductGenerator generator;
         private readonly Client john;
-        private readonly Product chips, beer;
 
         public StockTests()
         {
             builder = new StudentOfficeBuilder();
-            generator = builder.products;
             sut = builder.office._currentStock;
             john = builder.john;
-            chips = generator.chips; beer = generator.beer;
         }
 
         [Fact]
@@ -39,8 +35,8 @@ namespace TestsUnitaires
         [Fact]
         public void TestPackaging()
         {
-            Assert.Equal("Bottle", beer.Packaging);
-            Assert.Equal("Paper bag", chips.Packaging);
+            Assert.Equal("Bottle", ProductGenerator.beer.Packaging);
+            Assert.Equal("Paper bag", ProductGenerator.chips.Packaging);
         }
     }
 }

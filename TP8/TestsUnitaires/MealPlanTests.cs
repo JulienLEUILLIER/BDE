@@ -13,7 +13,6 @@ namespace TestsUnitaires
         private readonly MealPlanDirector sut;
         private readonly MealPlanConcreteBuilder preparator;
         private readonly MealPlanConcreteBuilderVeggie veggiepreparator;
-        private readonly ProductGenerator products;
         private readonly Client john;
 
         public MealPlanTests()
@@ -23,7 +22,6 @@ namespace TestsUnitaires
             preparator = new MealPlanConcreteBuilder();
             veggiepreparator = new MealPlanConcreteBuilderVeggie();
             sut.Assembler = preparator;
-            products = builder.products;
             john = builder.john;
         }
 
@@ -31,7 +29,7 @@ namespace TestsUnitaires
         public void AddingMealComponentTest()
         {
             // Testing if products are correctly added to meal plan
-            preparator.AddBeverage(builder.products.beer);
+            preparator.AddBeverage(ProductGenerator.beer);
             
             Assert.Single(preparator._mealplan.MealProducts);
         }
@@ -41,7 +39,7 @@ namespace TestsUnitaires
         {
             // Testing if resetting the meal plan after getting it works correctly
 
-            var mealplan = preparator.GetMealPlan();
+            preparator.GetMealPlan();
 
             Assert.Empty(preparator._mealplan.MealProducts);
         }
@@ -50,7 +48,7 @@ namespace TestsUnitaires
         public void SettingUpMealPlan()
         {
             // Testing if the complete meal gets back a meal plan of 3 products
-            sut.CompleteMeal(products.sandwich, products.chocolatebar, products.water);
+            sut.CompleteMeal(ProductGenerator.sandwich, ProductGenerator.chocolatebar, ProductGenerator.water);
 
             MealPlan mealPlan = preparator.GetMealPlan();
 
@@ -61,7 +59,7 @@ namespace TestsUnitaires
         public void CheckingVeggieMeal()
         {
             sut.Assembler = veggiepreparator;
-            sut.VeggieCompleteMeal(products.veggiesandwich, products.chocolatebar, products.water);
+            sut.VeggieCompleteMeal(ProductGenerator.veggiesandwich, ProductGenerator.chocolatebar, ProductGenerator.water);
 
             MealPlan mealPlan = veggiepreparator.GetMealPlan();
 
@@ -71,7 +69,7 @@ namespace TestsUnitaires
         [Fact]
         public void MealPlanSellingTest()
         {
-            sut.CompleteMeal(products.sandwich, products.chocolatebar, products.water);
+            sut.CompleteMeal(ProductGenerator.sandwich, ProductGenerator.chocolatebar, ProductGenerator.water);
             StudentOffice studentoffice = builder.office;
 
             studentoffice.SellMealPlan(preparator, john);

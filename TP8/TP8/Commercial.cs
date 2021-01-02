@@ -8,7 +8,12 @@ namespace TP8
     public class Commercial
     {
         public readonly HashSet<ProductInformation> Brochure = new HashSet<ProductInformation>();
-        public Product Order(string productname)
+
+        public void AddToBrochure(ProductInformation productinfo)
+        {
+            Brochure.Add(productinfo);
+        }
+        public Product OrderType(string productname)
         {
             ProductInformation productInformation = 
                 Brochure.FirstOrDefault(pr => pr._productName.ToUpper().Equals(productname.ToUpper()));
@@ -22,16 +27,16 @@ namespace TP8
                 };            
         }
 
-        public void AddToBrochure(ProductInformation productinfo)
+        public Order OrderedProduct(string productName, int quantity)
         {
-            Brochure.Add(productinfo);
+            return new Order(OrderType(productName), quantity);
         }
 
-        public void AddToStock(StudentOffice office, Product product, int quantity)
+        public void AddToStock(Stock stock, Order order)
         {
-            Stock stock = office._currentStock;
+            stock.Repository.SaveOrder(order);
 
-            stock.AddProduct(product, quantity);
+            stock.AddProduct(order);
         }
     }
 }

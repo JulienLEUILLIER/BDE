@@ -8,7 +8,6 @@ namespace TestsUnitaires
     {
         private readonly StudentOfficeBuilder builder;
         private readonly StudentOffice office;
-        private readonly ProductGenerator products;
         private readonly Client ofAge = Clients.Jane();
         private readonly Client underAge = Clients.Underage();
         private readonly Product water, chips, beer;
@@ -17,8 +16,7 @@ namespace TestsUnitaires
         {
             builder = new StudentOfficeBuilder();
             office = builder.office;
-            products = builder.products;
-            water = builder.products.water; chips = builder.products.chips; beer = builder.products.beer;
+            water = ProductGenerator.water; chips = ProductGenerator.chips; beer = ProductGenerator.beer;
         }
         [Fact]
         public void CanOrderBeverage()
@@ -52,9 +50,9 @@ namespace TestsUnitaires
             Stock stock = office._currentStock;
             Commercial commercial = office._commercial;
 
-            commercial.AddToStock(office, chips, 5);
+            commercial.AddToStock(stock, commercial.OrderedProduct("chips", 5));
 
-            Assert.Equal(55, stock._StockProduct[stock.GetProductByName("chips")]);
+            Assert.Equal(55, stock.GetProductQuantity("chips"));
         }
     }
 }

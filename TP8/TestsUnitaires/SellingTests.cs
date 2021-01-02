@@ -9,27 +9,23 @@ namespace TestsUnitaires
         private readonly StudentOfficeBuilder builder;
         private readonly StudentOffice sut;
         private readonly Client john, jane;
-        private readonly ProductGenerator products;
-        private readonly Product chips;
 
         
         public SellingTests()
         {
             builder = new StudentOfficeBuilder();
-            products = builder.products;
             sut = builder.office;
-            chips = products.chips;
             john = builder.john; jane = builder.jane;
-            sut.SellProduct(john, chips, 5);
-            sut.SellProduct(jane, chips, 3);
+            sut.SellProduct(john, ProductGenerator.chips, 5);
+            sut.SellProduct(jane, ProductGenerator.chips, 3);
         }
 
         [Fact]
         public void GetRightPrice()
         {
             // Get the right price based on the type of buyer, student or not
-            decimal priceStudent = john.GetAppropriatePrice(chips);
-            decimal priceOther = jane.GetAppropriatePrice(chips);
+            decimal priceStudent = john.GetAppropriatePrice(ProductGenerator.chips);
+            decimal priceOther = jane.GetAppropriatePrice(ProductGenerator.chips);
 
             Assert.Equal(1.5m, priceStudent);
             Assert.Equal(2.0m, priceOther);
@@ -64,7 +60,7 @@ namespace TestsUnitaires
         public void NotifyingTest()
         {
             // Test of the observer pattern : stock was at 42, 40 are sold, 40 are ordered
-            sut.SellProduct(john, chips, 40);
+            sut.SellProduct(john, ProductGenerator.chips, 40);
             Stock stock = sut._currentStock;
             Product stockedChips = stock.GetProductByName("chips");
 
