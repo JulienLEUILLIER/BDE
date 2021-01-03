@@ -7,29 +7,6 @@ namespace TP8
 {
     public sealed class StudentOffice : ISubscriber
     {
-        //private static StudentOffice instance = new StudentOffice();
-
-        //static StudentOffice()
-        //{ 
-        //}
-
-        //private StudentOffice()
-        //{
-        //    _currentStock = new Stock();
-        //}
-
-        //public static StudentOffice Instance
-        //{
-        //    get
-        //    {
-        //        return instance;
-        //    }
-        //}
-
-        //public static void DestructStudentOffice()
-        //{
-        //    instance = null;
-        //}
 
         public readonly Dictionary<Client, decimal> _ClientList = new Dictionary<Client, decimal>();
 
