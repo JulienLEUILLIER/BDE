@@ -11,14 +11,19 @@ namespace TP8
         public readonly Stock _stock;
         public readonly Commercial _commercial;
 
-        public Dictionary<Client, decimal> _ClientList { get; set; }
+        public Dictionary<Client, decimal> ClientList { get; set; }
 
         public StudentOffice(decimal balance)
         {
-            _stock = new Stock(balance);
+            _stock = new Stock(balance, new OrderingRepository());
             _commercial = new Commercial();
-            _ClientList = new Dictionary<Client, decimal>();
+            ClientList = new Dictionary<Client, decimal>();
         }
+
+        public StudentOffice() 
+        { 
+        }
+
         public Client CreateClient(string lastname, string firstname, short age, short year = 0)
         {
             return (year == 0) switch
@@ -30,30 +35,30 @@ namespace TP8
 
         public bool GetClientByName(string name)
         {
-            return _ClientList.Any(KeyValuePair => KeyValuePair.Key.GetName().ToUpper().Equals(name.ToUpper()));
+            return ClientList.Any(KeyValuePair => KeyValuePair.Key.GetName().ToUpper().Equals(name.ToUpper()));
         }
 
         public void AddClient(Client client, decimal balance)
         {
             if (!GetClientByName(client.GetName()))
             {
-                _ClientList.Add(client, balance);
+                ClientList.Add(client, balance);
             }
         }
         public void Update(Product product)
         {
             Order newOrder = _commercial.OrderedProduct(product._productName, 40);
-            _stock.AddToStock(_stock.Repository, newOrder);
+            _stock.AddToStock(newOrder);
         }
 
 
-        public void SellProduct(Client client, Product product, int number)
+        public void SellProduct(Client client, Order order)
         {
-            if (number > 0)
+            if (order._quantity > 0)
             {
-                decimal appropriatePrice = client.GetAppropriatePrice(product) * number;
-                _stock.CheckStockChange(product, -number);
-                _ClientList[client] -= appropriatePrice;
+                decimal appropriatePrice = client.GetAppropriatePrice(order._product) * order._quantity;
+                _stock.CheckStockChange(_stock.GetNegativeQuantity(order));
+                ClientList[client] -= appropriatePrice;
                 _stock.SetBalance(appropriatePrice);
             }
         }
@@ -63,13 +68,13 @@ namespace TP8
             MealPlan mealPlan = assembler.GetMealPlan();
             foreach (var product in mealPlan.MealProducts)
             {
-                SellProduct(client, product, 1);
+                SellProduct(client, new Order(product, 1));
             }
         }
 
         public List<Client> WrongBalance(decimal minimalBalance)
         {
-            return _ClientList.Keys.Where(kvp => _ClientList[kvp] < minimalBalance).ToList();
+            return ClientList.Keys.Where(kvp => ClientList[kvp] < minimalBalance).ToList();
         }
 
         public List<Client> WrongBalance()

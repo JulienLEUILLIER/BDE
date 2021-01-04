@@ -13,14 +13,12 @@ namespace TP8
 
         public Dictionary<Product, int> _StockProduct = new Dictionary<Product, int>();
 
-        private IOrderingRepository _repository;
+        private readonly IOrderingRepository _repository;
 
-        public IOrderingRepository Repository { get { return _repository; }  set { _repository = value; } }
-
-        public Stock(decimal balance)
+        public Stock(decimal balance, IOrderingRepository orderingRepository)
         {
             _currentBalance = balance;
-            
+            _repository = orderingRepository;
         }
 
         public Product GetProductByName(string name)
@@ -33,48 +31,49 @@ namespace TP8
             return _StockProduct[GetProductByName(name)];
         }
 
-        public void AddProduct(Order OrderType)
+        public void AddProduct(Order order)
         {
-            Product currentProduct = GetProductByName(OrderType._product._productName);
-            int quantity = OrderType._quantity;
+            Product currentProduct = GetProductByName(order._product._productName);
+            int quantity = order._quantity;
             if (quantity > 0)
             {
                 if (currentProduct == null)
                 {
-                    _StockProduct.Add(OrderType._product, quantity);
-                    SetBalance(-quantity * OrderType._product._buyPrice);
+                    _StockProduct.Add(order._product, quantity);
+                    SetBalance(-quantity * order._product._buyPrice);
                 }
                 else if (_currentBalance >= quantity * currentProduct._buyPrice)
                 {
-                    CheckStockChange(currentProduct, quantity);
+                    CheckStockChange(order);
                     SetBalance(-quantity * currentProduct._buyPrice);
                 }
             }
         }
 
-        public void AddToStock(IOrderingRepository repository, Order order)
+        public void AddToStock(Order order)
         {
-            repository.SaveOrder(order);
+            _repository.SaveOrder(order);
 
             AddProduct(order);
         }
 
-        public void CheckStockChange(Product product, int quantity)
+        public void CheckStockChange(Order order)
         {
-            product = GetProductByName(product._productName);
-            if (product != default && _StockProduct[product] + quantity >= 0)
+            Product product = GetProductByName(order._product._productName);
+
+            if (product != default && _StockProduct[product] + order._quantity >= 0)
             {
-                _StockProduct[product] += quantity;
+                _StockProduct[product] += order._quantity;
             }
             if (GetProductQuantity(product._productName) < 10)
             {
                 Notify(product);
             }
         }
-        public void SubstractProduct(Product product, int quantity, Client client)
+        public void SubstractProduct(Order order, Client client)
         {
-            CheckStockChange(product, -quantity);
-            SetBalance(client.GetAppropriatePrice(product) * quantity);         
+            SetBalance(client.GetAppropriatePrice(order._product) * order._quantity);
+            CheckStockChange(GetNegativeQuantity(order));
         }
 
         public void SetBalance(decimal amount)
@@ -96,6 +95,12 @@ namespace TP8
             {
                 Console.WriteLine("\t{0}: {1}", product.Key._productName, product.Value);
             }
+        }
+
+        public Order GetNegativeQuantity(Order order)
+        {
+            order._quantity *= -1;
+            return order;
         }
     }
 }

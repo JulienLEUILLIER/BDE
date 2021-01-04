@@ -29,7 +29,7 @@ namespace TestsUnitaires
             // Testing adding a single client of type Student to an empty student office
             StudentOffice instantTest = new StudentOffice(0);
             instantTest.AddClient(jane,0);
-            Assert.Single(instantTest._ClientList);
+            Assert.Single(instantTest.ClientList);
         }
         [Fact]
         public void AddingOtherClientTest()
@@ -37,7 +37,7 @@ namespace TestsUnitaires
             // Testing adding a single client of type OtherClient to an empty student office
             StudentOffice instantTest = new StudentOffice(0);
             instantTest.AddClient(john, 0);
-            Assert.Single(instantTest._ClientList);
+            Assert.Single(instantTest.ClientList);
         }
         [Fact]
         public void ClientTypeTest()

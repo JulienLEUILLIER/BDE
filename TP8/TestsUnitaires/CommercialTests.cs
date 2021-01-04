@@ -8,8 +8,6 @@ namespace TestsUnitaires
     {
         private readonly StudentOfficeBuilder builder;
         private readonly StudentOffice office;
-        private readonly Client ofAge = Clients.Jane();
-        private readonly Client underAge = Clients.Underage();
         private readonly Product water, chips, beer;
 
         public CommercialTests()
@@ -38,19 +36,12 @@ namespace TestsUnitaires
         }
 
         [Fact]
-        public void CanBuyAlcoholOrNot()
-        {
-            Assert.True(ofAge.CanBuy(beer));
-            Assert.False(underAge.CanBuy(beer));
-        }
-
-        [Fact]
         public void OrderingIntoStockTest()
         {
             Stock stock = office._stock;
             Commercial commercial = office._commercial;
 
-            stock.AddToStock(stock.Repository, commercial.OrderedProduct("chips", 5));
+            stock.AddToStock(commercial.OrderedProduct("chips", 5));
 
             Assert.Equal(55, stock.GetProductQuantity("chips"));
         }

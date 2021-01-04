@@ -25,11 +25,11 @@ namespace TestsUnitaires
         [Fact]
         public void TestSubstractingProduct()
         {
-            Product water = sut.GetProductByName("water");
+            Order waterOrder = new Order(sut.GetProductByName("water"), 5);
 
-            sut.SubstractProduct(water, 5, john);
+            sut.SubstractProduct(waterOrder, john);
 
-            Assert.Equal(45, sut._StockProduct[water]);
+            Assert.Equal(45, sut._StockProduct[waterOrder._product]);
         }
 
         [Fact]

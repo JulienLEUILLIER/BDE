@@ -16,8 +16,8 @@ namespace TestsUnitaires
             builder = new StudentOfficeBuilder();
             sut = builder.office;
             john = builder.john; jane = builder.jane;
-            sut.SellProduct(john, ProductGenerator.chips, 5);
-            sut.SellProduct(jane, ProductGenerator.chips, 3);
+            sut.SellProduct(john, new Order(ProductGenerator.chips, 5));
+            sut.SellProduct(jane, new Order(ProductGenerator.chips, 3));
         }
 
         [Fact]
@@ -45,8 +45,8 @@ namespace TestsUnitaires
             // John and Jane had their balance at 50 before the sell
             // Chips are 1.5 for members, 2.0 for non members
             // John bought 5, Jane bought 3
-            Assert.Equal(42.5m, sut._ClientList[john]);
-            Assert.Equal(44m, sut._ClientList[jane]);
+            Assert.Equal(42.5m, sut.ClientList[john]);
+            Assert.Equal(44m, sut.ClientList[jane]);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace TestsUnitaires
         public void NotifyingTest()
         {
             // Test of the observer pattern : stock was at 42, 40 are sold, 40 are ordered
-            sut.SellProduct(john, ProductGenerator.chips, 40);
+            sut.SellProduct(john, new Order(ProductGenerator.chips, 40));
             Stock stock = sut._stock;
             Product stockedChips = stock.GetProductByName("chips");
 

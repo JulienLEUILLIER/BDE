@@ -74,7 +74,7 @@ namespace TestsUnitaires
 
             studentoffice.SellMealPlan(preparator, john);
 
-            Assert.Equal(44.5m, studentoffice._ClientList[john]);
+            Assert.Equal(44.5m, studentoffice.ClientList[john]);
         }
     }
 }
