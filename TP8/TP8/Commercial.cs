@@ -31,12 +31,5 @@ namespace TP8
         {
             return new Order(OrderType(productName), quantity);
         }
-
-        public void AddToStock(Stock stock, Order order)
-        {
-            stock.Repository.SaveOrder(order);
-
-            stock.AddProduct(order);
-        }
     }
 }

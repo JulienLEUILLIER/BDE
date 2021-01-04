@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestsUnitaires.DataGenerator;
+﻿using TestsUnitaires.DataGenerator;
 using TP8;
 using Xunit;
-using NSubstitute;
 using System.Linq;
 
 namespace TestsUnitaires
@@ -14,12 +10,13 @@ namespace TestsUnitaires
         [Fact]
         public void TestStockedOrder()
         {
-            IOrderingRepository repository = new InMemoryOrderingRepository();
-            Stock stock = new Stock(100m, repository);
+            // Testing the orders repository correctly stores the orders when adding to stock
+            IOrderingRepository repository = new FakeOrderingRepository();
+            Stock stock = new Stock(100m);
+            stock.Repository = repository;
             Order order = new Order(ProductGenerator.water, 5);
-            Commercial commercial = new Commercial();
 
-            commercial.AddToStock(stock, order);
+            stock.AddToStock(repository, order);
 
             Assert.True(repository.OrdersPassed.First().Equals(order));
         }

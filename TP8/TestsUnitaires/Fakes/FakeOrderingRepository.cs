@@ -3,10 +3,10 @@ using TP8;
 
 namespace TestsUnitaires
 {
-    internal class InMemoryOrderingRepository : IOrderingRepository
+    internal class FakeOrderingRepository : IOrderingRepository
     {
         public List<Order> OrdersPassed { get; set; }
-        public InMemoryOrderingRepository()
+        public FakeOrderingRepository()
         {
             OrdersPassed = new List<Order>();
         }

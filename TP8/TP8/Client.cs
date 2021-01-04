@@ -45,9 +45,7 @@ namespace TP8
 
         public bool CanBuy(Product product)
         {
-            if (this._age <= 18 && product is AlcoholicBeverage)
-                return false;
-            return true;
+            return (!(_age <= 18 && product is AlcoholicBeverage));
         }
 
         public static bool operator ==(Client client1, Client client2)

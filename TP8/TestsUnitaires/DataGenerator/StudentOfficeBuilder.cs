@@ -19,7 +19,8 @@ namespace TestsUnitaires.DataGenerator
         internal StudentOfficeBuilder()
         {
             commercial = office._commercial;
-            stock = office._currentStock;
+            stock = office._stock;
+            stock.Repository = new FakeOrderingRepository();
             products = new ProductGenerator(commercial);
             mealPlanBuilder = new MealPlanDirector();
             InitializeStock();
@@ -31,7 +32,7 @@ namespace TestsUnitaires.DataGenerator
         {
             foreach (ProductInformation info in commercial.Brochure)
             {
-                stock.AddProduct(commercial.OrderedProduct(info._productName, 50));
+                stock.AddToStock(stock.Repository, commercial.OrderedProduct(info._productName, 50));
             }
         }
     }

@@ -13,16 +13,14 @@ namespace TP8
 
         public Dictionary<Product, int> _StockProduct = new Dictionary<Product, int>();
 
-        public IOrderingRepository Repository { get; set; }
+        private IOrderingRepository _repository;
 
-        public Stock(decimal balance, IOrderingRepository repository)
+        public IOrderingRepository Repository { get { return _repository; }  set { _repository = value; } }
+
+        public Stock(decimal balance)
         {
             _currentBalance = balance;
-            Repository = repository;
-        }
-
-        public Stock(decimal balance) : this(balance, new OrderingRepository())
-        {
+            
         }
 
         public Product GetProductByName(string name)
@@ -39,17 +37,26 @@ namespace TP8
         {
             Product currentProduct = GetProductByName(OrderType._product._productName);
             int quantity = OrderType._quantity;
-            
-            if (currentProduct == null)
+            if (quantity > 0)
             {
-                _StockProduct.Add(OrderType._product, quantity);
-                SetBalance(-quantity * OrderType._product._buyPrice);
+                if (currentProduct == null)
+                {
+                    _StockProduct.Add(OrderType._product, quantity);
+                    SetBalance(-quantity * OrderType._product._buyPrice);
+                }
+                else if (_currentBalance >= quantity * currentProduct._buyPrice)
+                {
+                    CheckStockChange(currentProduct, quantity);
+                    SetBalance(-quantity * currentProduct._buyPrice);
+                }
             }
-            else if (_currentBalance >= quantity * currentProduct._buyPrice && quantity > 0)
-            {
-                CheckStockChange(currentProduct, quantity);
-                SetBalance(-quantity * currentProduct._buyPrice);
-            }            
+        }
+
+        public void AddToStock(IOrderingRepository repository, Order order)
+        {
+            repository.SaveOrder(order);
+
+            AddProduct(order);
         }
 
         public void CheckStockChange(Product product, int quantity)

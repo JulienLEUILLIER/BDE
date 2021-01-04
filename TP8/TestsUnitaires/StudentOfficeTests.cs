@@ -6,28 +6,22 @@ namespace TestsUnitaires
 {
     public class StudentOfficeTests
     {
-        private readonly StudentOfficeBuilder sut;
-        private readonly StudentOffice office;
+        private readonly StudentOfficeBuilder builder;
+        private readonly StudentOffice SUT;
         private readonly Client john, jane;
 
         public StudentOfficeTests()
         {
-            sut = new StudentOfficeBuilder();
-            office = sut.office;
-            john = sut.john; jane = sut.jane;
-        }
-        [Fact]
-        public void TestFormatName()
-        {
-            // Testing formatting name
-            Assert.Equal("DOE John", john.GetName());
+            builder = new StudentOfficeBuilder();
+            SUT = builder.office;
+            john = builder.john; jane = builder.jane;
         }
 
         [Fact]
         public void GetRightClient()
         {
             // Testing if the client exists in the client list of the student office
-            Assert.True(office.GetClientByName(john.GetName()));
+            Assert.True(SUT.GetClientByName(john.GetName()));
         }
         [Fact]
         public void AddingSingleStudentTest()
@@ -49,14 +43,9 @@ namespace TestsUnitaires
         public void ClientTypeTest()
         {
             // Testing if creation of clients gets back the right type of client
-            Client pierre = Clients.CreateClient("dupont", "pierre", 25, 2006);
-            Client jean = Clients.CreateClient("moulin", "jean", 42);
+            Client pierre = SUT.CreateClient("dupont", "pierre", 25, 2006);
+            Client jean = SUT.CreateClient("moulin", "jean", 42);
 
-            office.AddClient(pierre, 5m);
-            office.AddClient(jean, 7m);
-
-            Assert.True(office.GetClientByName(pierre.GetName()));
-            Assert.True(office.GetClientByName(jean.GetName()));
             Assert.IsType<Student>(pierre);
             Assert.IsType<OtherClient>(jean);
         }

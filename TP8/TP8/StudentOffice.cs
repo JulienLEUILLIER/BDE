@@ -8,15 +8,24 @@ namespace TP8
     public sealed class StudentOffice : ISubscriber
     {
 
-        public readonly Dictionary<Client, decimal> _ClientList = new Dictionary<Client, decimal>();
-
-        public readonly Stock _currentStock;
+        public readonly Stock _stock;
         public readonly Commercial _commercial;
+
+        public Dictionary<Client, decimal> _ClientList { get; set; }
 
         public StudentOffice(decimal balance)
         {
-            _currentStock = new Stock(balance);
+            _stock = new Stock(balance);
             _commercial = new Commercial();
+            _ClientList = new Dictionary<Client, decimal>();
+        }
+        public Client CreateClient(string lastname, string firstname, short age, short year = 0)
+        {
+            return (year == 0) switch
+            {
+                true => new OtherClient(lastname, firstname, age),
+                false => new Student(lastname, firstname, age, year),
+            };
         }
 
         public bool GetClientByName(string name)
@@ -34,17 +43,18 @@ namespace TP8
         public void Update(Product product)
         {
             Order newOrder = _commercial.OrderedProduct(product._productName, 40);
-            _commercial.AddToStock(_currentStock, newOrder);
+            _stock.AddToStock(_stock.Repository, newOrder);
         }
+
 
         public void SellProduct(Client client, Product product, int number)
         {
             if (number > 0)
             {
                 decimal appropriatePrice = client.GetAppropriatePrice(product) * number;
-                _currentStock.CheckStockChange(product, -number);
+                _stock.CheckStockChange(product, -number);
                 _ClientList[client] -= appropriatePrice;
-                _currentStock.SetBalance(appropriatePrice);
+                _stock.SetBalance(appropriatePrice);
             }
         }
 

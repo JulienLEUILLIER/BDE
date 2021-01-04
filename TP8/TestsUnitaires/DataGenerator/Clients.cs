@@ -9,7 +9,7 @@ namespace TestsUnitaires.DataGenerator
     {
         public static Student John()
         {
-            return new Student("Doe", "John", 30, 1985);
+            return new Student("DOe", "JoHn", 30, 1985);
         }
 
         public static OtherClient Jane()
@@ -20,20 +20,6 @@ namespace TestsUnitaires.DataGenerator
         public static Client Underage()
         {
             return new OtherClient("Thomson", "Timmy", 15);
-        }
-
-        public static Client CreateClient(string lastname, string firstname, short age, short year = 0)
-        {
-            Client newClient;
-            if (year == 0)
-            {
-                newClient = new OtherClient(lastname, firstname, age);
-            }
-            else
-            {
-                newClient = new Student(lastname, firstname, age, year);
-            }
-            return newClient;
         }
     }
 }

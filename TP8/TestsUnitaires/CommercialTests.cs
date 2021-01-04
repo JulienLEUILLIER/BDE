@@ -47,10 +47,10 @@ namespace TestsUnitaires
         [Fact]
         public void OrderingIntoStockTest()
         {
-            Stock stock = office._currentStock;
+            Stock stock = office._stock;
             Commercial commercial = office._commercial;
 
-            commercial.AddToStock(stock, commercial.OrderedProduct("chips", 5));
+            stock.AddToStock(stock.Repository, commercial.OrderedProduct("chips", 5));
 
             Assert.Equal(55, stock.GetProductQuantity("chips"));
         }
