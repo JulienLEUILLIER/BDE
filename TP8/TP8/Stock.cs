@@ -5,33 +5,34 @@ using System.Linq;
 
 namespace TP8
 {
-    public class Stock : AbstractPublisher
+    public class Stock : AbstractPublisher, IStockData, IStockBehaviour
     {
         private decimal _currentBalance;
 
         public decimal CurrentBalance { get => _currentBalance; }
 
-        public Dictionary<Product, int> _StockProduct = new Dictionary<Product, int>();
+        public Dictionary<Product, int> StockProduct { get; set; }
 
         private readonly IOrderingRepository _repository;
 
         public Stock(decimal balance, IOrderingRepository orderingRepository)
         {
+            StockProduct = new Dictionary<Product, int>();
             _currentBalance = balance;
             _repository = orderingRepository;
         }
 
         public Product GetProductByName(string name)
         {
-            return _StockProduct.FirstOrDefault(kvp => kvp.Key._productName.ToUpper().Equals(name.ToUpper())).Key;
+            return StockProduct.FirstOrDefault(kvp => kvp.Key._productName.ToUpper().Equals(name.ToUpper())).Key;
         }
 
         public int GetProductQuantity(string name)
         {
-            return _StockProduct[GetProductByName(name)];
+            return StockProduct[GetProductByName(name)];
         }
 
-        public void AddProduct(Order order)
+        private void AddProduct(Order order)
         {
             Product currentProduct = GetProductByName(order._product._productName);
             int quantity = order._quantity;
@@ -39,7 +40,7 @@ namespace TP8
             {
                 if (currentProduct == null)
                 {
-                    _StockProduct.Add(order._product, quantity);
+                    StockProduct.Add(order._product, quantity);
                     SetBalance(-quantity * order._product._buyPrice);
                 }
                 else if (_currentBalance >= quantity * currentProduct._buyPrice)
@@ -57,33 +58,39 @@ namespace TP8
             AddProduct(order);
         }
 
-        public void CheckStockChange(Order order)
+        private void CheckStockChange(Order order)
         {
             Product product = GetProductByName(order._product._productName);
 
-            if (product != default && _StockProduct[product] + order._quantity >= 0)
+            if (product != default && StockProduct[product] + order._quantity >= 0)
             {
-                _StockProduct[product] += order._quantity;
+                StockProduct[product] += order._quantity;
             }
             if (GetProductQuantity(product._productName) < 10)
             {
                 Notify(product);
             }
         }
-        public void SubstractProduct(Order order, Client client)
+        private Order GetNegativeQuantity(Order order)
         {
-            SetBalance(client.GetAppropriatePrice(order._product) * order._quantity);
-            CheckStockChange(GetNegativeQuantity(order));
+            order._quantity *= -1;
+            return order;
         }
 
-        public void SetBalance(decimal amount)
+        public void SellingOperations(decimal appropriatePrice, Order order)
+        {
+            CheckStockChange(GetNegativeQuantity(order));
+            SetBalance(appropriatePrice);
+        }
+
+        private void SetBalance(decimal amount)
         {
             _currentBalance += amount;
         }
 
-        public override void Notify(Product product)
+        public void Notify(Product product)
         {
-            foreach (var subscriber in _subscribers)
+            foreach (var subscriber in Subscribers)
             {
                 subscriber.Update(product);
             }
@@ -91,16 +98,10 @@ namespace TP8
 
         public void DisplayStockConsole()
         {
-            foreach (KeyValuePair<Product, int> product in _StockProduct)
+            foreach (KeyValuePair<Product, int> product in StockProduct)
             {
                 Console.WriteLine("\t{0}: {1}", product.Key._productName, product.Value);
             }
-        }
-
-        public Order GetNegativeQuantity(Order order)
-        {
-            order._quantity *= -1;
-            return order;
         }
     }
 }

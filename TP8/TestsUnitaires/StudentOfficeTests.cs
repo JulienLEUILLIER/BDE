@@ -14,7 +14,7 @@ namespace TestsUnitaires
         {
             builder = new StudentOfficeBuilder();
             SUT = builder.office;
-            john = builder.john; jane = builder.jane;
+            john = Clients.John(); jane = Clients.Jane();
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace TestsUnitaires
         public void AddingSingleStudentTest()
         {
             // Testing adding a single client of type Student to an empty student office
-            StudentOffice instantTest = new StudentOffice(0);
+            StudentOffice instantTest = new StudentOffice();
             instantTest.AddClient(jane,0);
             Assert.Single(instantTest.ClientList);
         }
@@ -35,7 +35,7 @@ namespace TestsUnitaires
         public void AddingOtherClientTest()
         {
             // Testing adding a single client of type OtherClient to an empty student office
-            StudentOffice instantTest = new StudentOffice(0);
+            StudentOffice instantTest = new StudentOffice();
             instantTest.AddClient(john, 0);
             Assert.Single(instantTest.ClientList);
         }

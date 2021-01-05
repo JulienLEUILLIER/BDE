@@ -38,12 +38,13 @@ namespace TestsUnitaires
         [Fact]
         public void OrderingIntoStockTest()
         {
-            Stock stock = office._stock;
+            IStockBehaviour stock = office._stock;
             Commercial commercial = office._commercial;
 
             stock.AddToStock(commercial.OrderedProduct("chips", 5));
+            IStockData stockData = (IStockData)stock;
 
-            Assert.Equal(55, stock.GetProductQuantity("chips"));
+            Assert.Equal(55, stockData.GetProductQuantity("chips"));
         }
     }
 }

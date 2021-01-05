@@ -7,13 +7,13 @@ namespace TestsUnitaires
     public class StockTests
     {
         private readonly StudentOfficeBuilder builder;
-        private readonly Stock sut;
+        private readonly IStockData sut;
         private readonly Client john;
 
         public StockTests()
         {
             builder = new StudentOfficeBuilder();
-            sut = builder.office._stock;
+            sut = (IStockData)builder.office._stock;
             john = builder.john;
         }
 
@@ -26,10 +26,11 @@ namespace TestsUnitaires
         public void TestSubstractingProduct()
         {
             Order waterOrder = new Order(sut.GetProductByName("water"), 5);
+            IStockBehaviour publisher = (IStockBehaviour)sut;
 
-            sut.SubstractProduct(waterOrder, john);
+            publisher.SellingOperations(john.GetAppropriatePrice(waterOrder._product), waterOrder);
 
-            Assert.Equal(45, sut._StockProduct[waterOrder._product]);
+            Assert.Equal(45, sut.StockProduct[waterOrder._product]);
         }
 
         [Fact]

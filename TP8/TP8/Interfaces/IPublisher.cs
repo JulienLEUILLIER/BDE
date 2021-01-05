@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TP8
 {
     public interface IPublisher
     {
-        public void Attach(ISubscriber subscriber);
-        public void Detach(ISubscriber subscriber);
-        public void Notify(Product product);
+        List<ISubscriber> Subscribers { get; set; }
     }
 }

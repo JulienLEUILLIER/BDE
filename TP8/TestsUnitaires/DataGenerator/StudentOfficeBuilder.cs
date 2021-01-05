@@ -7,9 +7,9 @@ namespace TestsUnitaires.DataGenerator
 {
     internal class StudentOfficeBuilder
     {
-        internal readonly StudentOffice office = new StudentOffice(1000m);
+        internal readonly StudentOffice office;
         internal readonly Commercial commercial;
-        internal readonly Stock stock;
+        internal readonly IStockBehaviour stock;
         internal readonly ProductGenerator products;
         internal readonly MealPlanDirector mealPlanBuilder;
         internal Client john = Clients.John();
@@ -18,6 +18,7 @@ namespace TestsUnitaires.DataGenerator
         
         internal StudentOfficeBuilder()
         {
+            office = new StudentOffice(new Stock(1000m, new OrderingRepository()));
             commercial = office._commercial;
             stock = office._stock;
             products = new ProductGenerator(commercial);

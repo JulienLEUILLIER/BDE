@@ -6,20 +6,21 @@ namespace TP8
 {
     public abstract class AbstractPublisher : IPublisher
     {
-        protected List<ISubscriber> _subscribers = new List<ISubscriber>();
+        public List<ISubscriber> Subscribers { get; set; }
 
-        public void Attach(ISubscriber subscriber)
+        public AbstractPublisher()
         {
-            _subscribers.Add(subscriber);
+            Subscribers = new List<ISubscriber>();
         }
 
-        public void Detach(ISubscriber subscriber)
+        public virtual void Attach(ISubscriber subscriber)
         {
-            _subscribers.Remove(subscriber);
+            Subscribers.Add(subscriber);
         }
 
-        public virtual void Notify(Product product)
-        {            
+        public virtual void Detach(ISubscriber subscriber)
+        {
+            Subscribers.Remove(subscriber);
         }
     }
 }
