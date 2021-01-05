@@ -1,9 +1,8 @@
 ﻿using TestsUnitaires.DataGenerator;
 using TP8;
 using Xunit;
-using System.Linq;
-using Moq;
 using NSubstitute;
+using TestsUnitaires.Fakes;
 
 namespace TestsUnitaires
 {
@@ -22,30 +21,17 @@ namespace TestsUnitaires
             repoMock.Received().SaveOrder(order);
         }
 
-        [Fact]
-        public void NotifyingTest()
-        {
-            var officeMock = new Mock<ISubscriber>();
-            IStockBehaviour stock = new Stock(500m, new OrderingRepository());
-            stock.Attach(officeMock.Object);
-            stock.AddToStock(new Order(ProductGenerator.chips, 11));
-
-            officeMock.Setup(o => o.SellProduct(Clients.John(), new Order(ProductGenerator.chips, 2)));
-
-            officeMock.Verify(o => o.Update(It.IsAny<Product>()));
-        }
 
         [Fact]
-        public void OtherTest()
+        public void NotifyingTestMock()
         {
-            var stockMock = Substitute.For<ISubscriber>();
-            IStockBehaviour stock = new Stock(500m, new OrderingRepository());
-            stock.Attach(stockMock);
-            stock.AddToStock(new Order(ProductGenerator.chips, 11));
+            var stock = Substitute.For<IStockBehaviour>();
+            var sut = new StudentOffice(stock);
+            Order order = new Order(ProductGenerator.chips, 5);
 
-            stockMock.SellProduct(Clients.John(), new Order(ProductGenerator.chips, 2));
+            stock.AddToStock(order);
 
-            stockMock.Received().Update(ProductGenerator.chips);
+            stock.Received().Notify(order._product);
         }
     }
 }

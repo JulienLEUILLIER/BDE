@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace TP8
 {
-    public sealed class StudentOffice : ISubscriber
+    public class StudentOffice : IStudentOffice, ISubscriber
     {
 
         public IStockBehaviour _stock;

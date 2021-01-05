@@ -35,9 +35,8 @@ namespace TestsUnitaires
         {
             // 8 chips were bought, 50 were there at the start
             IStockData stock = (IStockData)sut._stock;
-            Product stockedChips = stock.GetProductByName("chips");
 
-            Assert.Equal(42, stock.StockProduct[stockedChips]);
+            Assert.Equal(42, stock.GetProductQuantity("chips"));
         }
         [Fact]
         public void ClientBalanceChangeTest()
@@ -61,12 +60,12 @@ namespace TestsUnitaires
         [Fact]
         public void NotifyingTest()
         {
-            // Test of the observer pattern : stock was at 42, 40 are sold, 40 are ordered
+            // Test of the notifying : stock was at 42, 35 are sold, 40 are ordered
             IStockData stock = (IStockData)sut._stock;
             
-            sut.SellProduct(john, new Order(ProductGenerator.chips, 40));
+            sut.SellProduct(john, new Order(ProductGenerator.chips, 35));
 
-            Assert.Equal(42, stock.GetProductQuantity("chips"));
+            Assert.Equal(47, stock.GetProductQuantity("chips"));
         }
     }
 }

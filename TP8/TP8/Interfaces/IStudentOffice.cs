@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TP8
 {
-    public interface ISubscriber
+    public interface IStudentOffice
     {
-        public void Update(Product product);
+        void SellProduct(Client client, Order order);
     }
 }

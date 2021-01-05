@@ -19,7 +19,7 @@ namespace TestsUnitaires.DataGenerator
 
         public static Client Underage()
         {
-            return new OtherClient("Thomson", "Timmy", 15);
+            return new OtherClient("Thompson", "Timmy", 15);
         }
     }
 }
