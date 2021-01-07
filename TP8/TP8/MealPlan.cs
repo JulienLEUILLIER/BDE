@@ -5,9 +5,15 @@ using System.Linq;
 
 namespace TP8
 {
-    public class MealPlan
+    public class MealPlan : ISellable
     {
         public readonly List<Product> MealProducts = new List<Product>();
+
+        public decimal BuyPrice { get; }
+
+        public decimal MemberPrice { get; }
+
+        public decimal NotMemberPrice { get; }
 
         public void AddToMeal(Product product)
         {
@@ -22,12 +28,12 @@ namespace TP8
             //    price += product._memberPrice;
             //}
             //return price;
-            return MealProducts.Sum(product => product._memberPrice);
+            return MealProducts.Sum(product => product.GetTotalPriceMember());
         }
 
         public decimal GetTotalPriceNotMember()
         {
-            return MealProducts.Sum(product => product._notMemberPrice);
+            return MealProducts.Sum(product => product.GetTotalPriceNotMember());
         }
     }
 }

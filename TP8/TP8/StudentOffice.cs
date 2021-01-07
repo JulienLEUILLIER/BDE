@@ -11,6 +11,7 @@ namespace TP8
         public readonly Commercial _commercial;
 
         public Dictionary<Client, decimal> ClientList { get; set; }
+        public List<Transaction> TransactionsList { get; set; }
 
         public StudentOffice(IStockBehaviour stock)
         {
@@ -54,11 +55,43 @@ namespace TP8
 
         public void SellProduct(Client client, Order order)
         {
-            if (order._quantity > 0)
+            if (order._quantity > 0 && client.CanBuy(order._product))
             {
                 decimal appropriatePrice = client.GetAppropriatePrice(order._product) * order._quantity;
                 ClientList[client] -= appropriatePrice;
                 _stock.SellingOperations(appropriatePrice, order);
+            }
+            TransactionsOperations(client, order);
+        }
+
+        private void TransactionsOperations(Client client, Order order)
+        {
+            if (TransactionsList == null)
+            {
+                TransactionsList = new List<Transaction>();
+            }
+            TransactionsList.Add(new Transaction(order._product, order._quantity, client));
+        }
+
+        private IVisitor CreateVisitorClient()
+        {
+            IVisitor visitorClient = new ConcreteVisitorClient();
+            AttachTransactionsToVisitor(visitorClient);
+            return visitorClient;
+        }
+
+        private IVisitor CreateVisitorProduct()
+        {
+            IVisitor visitorProduct = new ConcreteVisitorProduct();
+            AttachTransactionsToVisitor(visitorProduct);
+            return visitorProduct;
+        }
+
+        private void AttachTransactionsToVisitor(IVisitor visitor)
+        {
+            foreach (var transaction in TransactionsList)
+            {
+                transaction.Accept(visitor);
             }
         }
 

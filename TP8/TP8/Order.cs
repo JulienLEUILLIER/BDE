@@ -4,9 +4,9 @@
     {
         public Product _product;
         public int _quantity;
-        public Order(Product product, int quantity)
+        public Order(ISellable product, int quantity)
         {
-            _product = product;
+            _product = (Product)product;
             _quantity = quantity;
         }
     }

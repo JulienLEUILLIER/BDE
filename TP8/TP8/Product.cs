@@ -4,22 +4,33 @@ using System.Text;
 
 namespace TP8
 {
-    public abstract class Product : IPackaging
+    public abstract class Product : IPackaging, ISellable
     {
         public readonly string _productName;
-        public readonly decimal _buyPrice;
-        public readonly decimal _memberPrice;
-        public readonly decimal _notMemberPrice;
+        public decimal BuyPrice { get; }
+        public decimal MemberPrice { get; }
+        public decimal NotMemberPrice { get; }
+
         public bool _isVeggie;
 
         public string Packaging { get; set; }
         protected Product(ProductInformation info)
         {
             _productName = info._productName;
-            _buyPrice = info._buyPrice;
-            _memberPrice = info._memberPrice;
-            _notMemberPrice = info._notMemberPrice;
+            BuyPrice = info._buyPrice;
+            MemberPrice = info._memberPrice;
+            NotMemberPrice = info._notMemberPrice;
             _isVeggie = info._isVeggie;
+        }
+
+        public decimal GetTotalPriceMember()
+        {
+            return MemberPrice;
+        }
+
+        public decimal GetTotalPriceNotMember()
+        {
+            return NotMemberPrice;
         }
     }
 }

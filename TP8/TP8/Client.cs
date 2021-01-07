@@ -35,11 +35,11 @@ namespace TP8
             return _lastname + " " + _firstname;
         }
 
-        public decimal GetAppropriatePrice(Product product)
+        public decimal GetAppropriatePrice(ISellable product)
         {
             decimal appropriatePrice;
             appropriatePrice = this is Student ?
-                product._memberPrice : product._notMemberPrice;
+                product.MemberPrice : product.NotMemberPrice;
             return appropriatePrice;
         }
 

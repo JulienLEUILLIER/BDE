@@ -15,7 +15,7 @@ namespace TestsUnitaires.Fakes
         public void AddToStock(Order newOrder)
         {
             StockProduct.Add(newOrder._product, newOrder._quantity);
-            SellingOperations(newOrder._product._memberPrice, newOrder);
+            SellingOperations(newOrder._product.MemberPrice, newOrder);
         }
 
         public void Notify(Product product)

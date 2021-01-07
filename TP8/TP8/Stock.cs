@@ -41,12 +41,12 @@ namespace TP8
                 if (currentProduct == null)
                 {
                     StockProduct.Add(order._product, quantity);
-                    SetBalance(-quantity * order._product._buyPrice);
+                    SetBalance(-quantity * order._product.BuyPrice);
                 }
-                else if (_currentBalance >= quantity * currentProduct._buyPrice)
+                else if (_currentBalance >= quantity * currentProduct.BuyPrice)
                 {
                     CheckStockChange(order);
-                    SetBalance(-quantity * currentProduct._buyPrice);
+                    SetBalance(-quantity * currentProduct.BuyPrice);
                 }
             }
         }
