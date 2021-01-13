@@ -15,6 +15,8 @@ namespace TP8
 
         public decimal NotMemberPrice { get; }
 
+        public string _name { get; }
+
         public void AddToMeal(Product product)
         {
             MealProducts.Add(product);
@@ -22,12 +24,6 @@ namespace TP8
 
         public decimal GetTotalPriceMember()
         {
-            //decimal price = 0;
-            //foreach (Product product in MealProducts)
-            //{
-            //    price += product._memberPrice;
-            //}
-            //return price;
             return MealProducts.Sum(product => product.GetTotalPriceMember());
         }
 

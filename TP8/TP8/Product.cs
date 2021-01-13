@@ -6,7 +6,7 @@ namespace TP8
 {
     public abstract class Product : IPackaging, ISellable
     {
-        public readonly string _productName;
+        public string _name { get; }
         public decimal BuyPrice { get; }
         public decimal MemberPrice { get; }
         public decimal NotMemberPrice { get; }
@@ -16,7 +16,7 @@ namespace TP8
         public string Packaging { get; set; }
         protected Product(ProductInformation info)
         {
-            _productName = info._productName;
+            _name = info._productName;
             BuyPrice = info._buyPrice;
             MemberPrice = info._memberPrice;
             NotMemberPrice = info._notMemberPrice;

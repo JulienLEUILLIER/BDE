@@ -5,9 +5,14 @@ using System.Linq;
 
 namespace TP8
 {
-    public class ConcreteVisitorClient : IVisitor
+    public class BestClientVisitor : IVisitor
     {
         private readonly Dictionary<Client, decimal> ClientsTransactions;
+
+        public BestClientVisitor()
+        {
+            ClientsTransactions = new Dictionary<Client, decimal>();
+        }
 
         private Client GetClientInDictionary(string name)
         {
@@ -29,15 +34,15 @@ namespace TP8
             }
         }
 
-        private KeyValuePair<Client, decimal> GetBestClient()
+        private Client GetBestClient()
         {
-            
+            return ClientsTransactions.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
         }
 
-        private void DisplayBestClient(KeyValuePair<Client,decimal> kvp)
+        public void DisplayBestClient()
         {
-
-        }
-        
+            Client bestClient = GetBestClient();
+            Console.WriteLine($"Best client is {bestClient} who spent {ClientsTransactions[bestClient]}.");
+        }        
     }
 }

@@ -20,18 +20,5 @@ namespace TestsUnitaires
 
             repoMock.Received().SaveOrder(order);
         }
-
-
-        [Fact]
-        public void NotifyingTestMock()
-        {
-            var stock = Substitute.For<IStockBehaviour>();
-            var sut = new StudentOffice(stock);
-            Order order = new Order(ProductGenerator.chips, 5);
-
-            stock.AddToStock(order);
-
-            stock.Received().Notify(order._product);
-        }
     }
 }

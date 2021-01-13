@@ -24,7 +24,7 @@ namespace TP8
 
         public Product GetProductByName(string name)
         {
-            return StockProduct.FirstOrDefault(kvp => kvp.Key._productName.ToUpper().Equals(name.ToUpper())).Key;
+            return StockProduct.FirstOrDefault(kvp => kvp.Key._name.ToUpper().Equals(name.ToUpper())).Key;
         }
 
         public int GetProductQuantity(string name)
@@ -34,7 +34,7 @@ namespace TP8
 
         private void AddProduct(Order order)
         {
-            Product currentProduct = GetProductByName(order._product._productName);
+            Product currentProduct = GetProductByName(order._product._name);
             int quantity = order._quantity;
             if (quantity > 0)
             {
@@ -60,13 +60,13 @@ namespace TP8
 
         private void CheckStockChange(Order order)
         {
-            Product product = GetProductByName(order._product._productName);
+            Product product = GetProductByName(order._product._name);
 
             if (product != default && StockProduct[product] + order._quantity >= 0)
             {
                 StockProduct[product] += order._quantity;
             }
-            if (GetProductQuantity(product._productName) < 10)
+            if (GetProductQuantity(product._name) < 10)
             {
                 Notify(product);
             }
@@ -100,7 +100,7 @@ namespace TP8
         {
             foreach (KeyValuePair<Product, int> product in StockProduct)
             {
-                Console.WriteLine("\t{0}: {1}", product.Key._productName, product.Value);
+                Console.WriteLine("\t{0}: {1}", product.Key._name, product.Value);
             }
         }
     }

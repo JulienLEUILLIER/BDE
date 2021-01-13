@@ -48,7 +48,7 @@ namespace TP8
         }
         public void Update(Product product)
         {
-            Order newOrder = _commercial.OrderedProduct(product._productName, 40);
+            Order newOrder = _commercial.OrderedProduct(product._name, 40);
             _stock.AddToStock(newOrder);
         }
 
@@ -73,16 +73,16 @@ namespace TP8
             TransactionsList.Add(new Transaction(order._product, order._quantity, client));
         }
 
-        private IVisitor CreateVisitorClient()
+        public IVisitor CreateVisitorClient()
         {
-            IVisitor visitorClient = new ConcreteVisitorClient();
+            IVisitor visitorClient = new BestClientVisitor();
             AttachTransactionsToVisitor(visitorClient);
             return visitorClient;
         }
 
-        private IVisitor CreateVisitorProduct()
+        public IVisitor CreateVisitorProduct()
         {
-            IVisitor visitorProduct = new ConcreteVisitorProduct();
+            IVisitor visitorProduct = new BestProductVisitor();
             AttachTransactionsToVisitor(visitorProduct);
             return visitorProduct;
         }
