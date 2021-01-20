@@ -7,17 +7,56 @@ namespace TP8
     public class StudentOffice : IStudentOffice, ISubscriber
     {
 
-        public IStockBehaviour _stock;
+        private IStockBehaviour _stock;
+
+        public IStockBehaviour Stock
+        {
+            get { return _stock; }
+            private set { _stock = value; }
+        }
+
+
+        private Dictionary<Client, decimal> _clientlist;
+
+
+        public Dictionary<Client, decimal> ClientList 
+        {
+            get { return _clientlist; }
+            private set { _clientlist = value; } 
+        }
+
+        private List<Transaction> _transactionsList;
+        public List<Transaction> TransactionsList {
+            get { return _transactionsList; }
+            private set { _transactionsList = value; }
+        }
+
+
         public readonly Commercial _commercial;
 
-        public Dictionary<Client, decimal> ClientList { get; set; }
-        public List<Transaction> TransactionsList { get; set; }
 
         public StudentOffice(IStockBehaviour stock)
         {
+            _clientlist = new Dictionary<Client, decimal>();
+            _transactionsList = new List<Transaction>();
             _stock = stock;
             _commercial = new Commercial();
-            ClientList = new Dictionary<Client, decimal>();
+        }
+
+
+        public IMemento SaveState()
+        {
+            return new StateOfStudentOffice(
+                new Dictionary<Client, decimal>(_clientlist), 
+                (IStockData)_stock, 
+                new List<Transaction>(_transactionsList));
+        }
+
+        public void RestoreState(IMemento memento)
+        {
+            this.ClientList = memento.GetClientsSnapshot();
+            this._stock = (IStockBehaviour)memento.GetStockSnapshot();
+            this.TransactionsList = memento.GetTransactionsSnapshot();
         }
 
         public StudentOffice() 
@@ -71,6 +110,7 @@ namespace TP8
                 TransactionsList = new List<Transaction>();
             }
             TransactionsList.Add(new Transaction(order._product, order._quantity, client));
+
         }
 
         public IVisitor CreateVisitorClient()

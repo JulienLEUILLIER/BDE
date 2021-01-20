@@ -13,7 +13,7 @@ namespace TestsUnitaires
         public StockTests()
         {
             builder = new StudentOfficeBuilder();
-            sut = (IStockData)builder.office._stock;
+            sut = (IStockData)builder.office.Stock;
             john = builder.john;
         }
 

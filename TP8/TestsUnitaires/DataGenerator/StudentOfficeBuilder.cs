@@ -20,7 +20,7 @@ namespace TestsUnitaires.DataGenerator
         {
             office = new StudentOffice(new Stock(1000m, new OrderingRepository()));
             commercial = office._commercial;
-            stock = office._stock;
+            stock = office.Stock;
             products = new ProductGenerator(commercial);
             mealPlanBuilder = new MealPlanDirector();
             InitializeStock();

@@ -34,7 +34,7 @@ namespace TestsUnitaires
         public void StockChangeTest()
         {
             // 8 chips were bought, 50 were there at the start
-            IStockData stock = (IStockData)sut._stock;
+            IStockData stock = (IStockData)sut.Stock;
 
             Assert.Equal(42, stock.GetProductQuantity("chips"));
         }
@@ -52,7 +52,7 @@ namespace TestsUnitaires
         public void StudentOfficeBalanceChangeTest()
         {
             // Office balance was 237.5 before the sell
-            IStockData stock = (IStockData)sut._stock;
+            IStockData stock = (IStockData)sut.Stock;
 
             Assert.Equal(251m, stock.CurrentBalance);
         }
@@ -61,7 +61,7 @@ namespace TestsUnitaires
         public void NotifyingTest()
         {
             // Test of the notifying : stock was at 42, 35 are sold, 40 are ordered
-            IStockData stock = (IStockData)sut._stock;
+            IStockData stock = (IStockData)sut.Stock;
             
             sut.SellProduct(john, new Order(ProductGenerator.chips, 35));
 

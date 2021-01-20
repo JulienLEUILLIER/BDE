@@ -38,7 +38,7 @@ namespace TestsUnitaires
         [Fact]
         public void OrderingIntoStockTest()
         {
-            IStockBehaviour stock = office._stock;
+            IStockBehaviour stock = office.Stock;
             Commercial commercial = office._commercial;
 
             stock.AddToStock(commercial.OrderedProduct("chips", 5));
